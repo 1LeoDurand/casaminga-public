@@ -4,6 +4,7 @@ import { HeroScroll } from "./components/HeroScroll";
 import { StatsSection } from "./components/StatsSection";
 import { EventsSection } from "./components/EventsSection";
 import { MembershipsSection } from "./components/MembershipsSection";
+import { PricingSection } from "./components/PricingSection";
 import { ManifestoSection } from "./components/ManifestoSection";
 import { Footer } from "./components/Footer";
 import {
@@ -61,6 +62,7 @@ export default function App() {
         />
         <EventsSection events={events} orgs={orgs} />
         <MembershipsSection campaigns={campaigns} orgs={orgs} />
+        <PricingSection />
         <ManifestoSection />
       </main>
       <Footer />

@@ -34,6 +34,7 @@ export function Nav() {
             { label: "Les lieux", href: "#lieux" },
             { label: "Événements", href: "#evenements" },
             { label: "Rejoindre", href: "#adhesions" },
+            { label: "Tarifs", href: "#tarifs" },
           ].map((l) => (
             <a
               key={l.href}
