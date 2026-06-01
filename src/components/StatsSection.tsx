@@ -33,19 +33,19 @@ export function StatsSection({ orgCount, memberCount, eventCount }: {
   const stats = [
     { value: orgCount, suffix: "", label: "lieux en réseau" },
     { value: memberCount, suffix: "+", label: "membres actifs" },
-    { value: eventCount, suffix: "", label: "événements par trimestre" },
+    { value: eventCount, suffix: "", label: "événements à venir" },
   ];
 
   return (
-    <section className="relative overflow-hidden border-y border-white/[0.06] bg-white/[0.02]">
-      <div className="mx-auto max-w-7xl px-6 py-20 md:px-16">
-        <div className="grid grid-cols-1 gap-12 md:grid-cols-3">
+    <section style={{ background: "var(--white)", padding: "clamp(48px,6vw,72px) 0" }}>
+      <div className="wrap">
+        <div className="grid gap-10 text-center md:grid-cols-3">
           {stats.map((s) => (
-            <div key={s.label} className="text-center md:text-left">
-              <div className="font-heading text-6xl font-extrabold text-white md:text-7xl">
+            <div key={s.label}>
+              <div className="font-extrabold" style={{ fontSize: "clamp(40px,6vw,64px)", color: "var(--coral-deep)", lineHeight: 1 }}>
                 <CountUp target={s.value} suffix={s.suffix} />
               </div>
-              <div className="mt-2 text-base text-white/40">{s.label}</div>
+              <div className="mt-2 text-base" style={{ color: "var(--gray)" }}>{s.label}</div>
             </div>
           ))}
         </div>

@@ -1,69 +1,33 @@
-import { useEffect, useRef, useState } from "react";
-
 export function ManifestoSection() {
-  const ref = useRef<HTMLElement>(null);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
-      { threshold: 0.3 }
-    );
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, []);
-
   return (
-    <section ref={ref} className="relative overflow-hidden py-32 border-t border-white/[0.06]">
-      {/* Fond décoratif */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-coral/[0.03] to-transparent" />
-      <div className="absolute right-0 top-1/2 -translate-y-1/2 size-[600px] rounded-full bg-coral/5 blur-[160px]" />
-
-      <div className="relative mx-auto max-w-7xl px-6 md:px-16">
-        <div className="max-w-4xl">
-          <p
-            className={`mb-6 text-sm font-medium uppercase tracking-[0.2em] text-white/30 transition-all duration-700 ${
-              visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-            }`}
-          >
-            Notre raison d'être
-          </p>
-          <h2
-            className={`font-heading text-5xl font-extrabold leading-[1.05] text-white transition-all duration-700 delay-100 md:text-7xl text-balance ${
-              visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-            }`}
-          >
-            Des lieux où l'on{" "}
-            <span className="text-coral">fait ensemble.</span>
-          </h2>
-          <p
-            className={`mt-8 text-lg text-white/50 max-w-2xl leading-relaxed transition-all duration-700 delay-200 ${
-              visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-            }`}
-          >
-            Casa Minga connecte les tiers-lieux culturels, associatifs et hybrides de France.
-            Des espaces qui croient que créer, partager et décider ensemble,
-            c'est possible — et nécessaire.
-          </p>
+    <section style={{ background: "var(--cream-warm)", padding: "clamp(64px,9vw,108px) 0" }}>
+      <div className="wrap">
+        <div className="grid items-center gap-12 md:grid-cols-[1fr_1.1fr]">
+          <div>
+            <div className="eyebrow mint">Notre raison d'être</div>
+            <h2 className="mb-4">Des lieux où l'on fait ensemble.</h2>
+            <p className="mb-3.5" style={{ fontSize: "16px", color: "var(--black-soft)", lineHeight: 1.75, maxWidth: "60ch" }}>
+              Casa Minga connecte les tiers-lieux culturels, associatifs et hybrides de France.
+              Des espaces qui croient que créer, partager et décider ensemble, c'est possible — et nécessaire.
+            </p>
+            <p style={{ fontSize: "16px", color: "var(--black-soft)", lineHeight: 1.75, maxWidth: "60ch" }}>
+              Chaque lieu garde son identité, ses couleurs, sa communauté. Casa Minga les relie sans les uniformiser.
+            </p>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <a href="#lieux" className="btn btn-primary">Explorer les lieux →</a>
+              <a href="https://admin.casaminga.com" target="_blank" rel="noopener noreferrer" className="btn btn-secondary">Gérer mon lieu</a>
+            </div>
+          </div>
           <div
-            className={`mt-10 flex flex-wrap gap-4 transition-all duration-700 delay-300 ${
-              visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-            }`}
+            className="rounded-[18px] p-6"
+            style={{ background: "linear-gradient(135deg, var(--peach-pale) 0%, var(--cream) 100%)", borderLeft: "4px solid var(--coral)", borderRadius: "0 18px 18px 0" }}
           >
-            <a
-              href="#lieux"
-              className="rounded-full bg-coral px-6 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90"
-            >
-              Explorer les lieux →
-            </a>
-            <a
-              href="https://admin.casaminga.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="rounded-full border border-white/20 px-6 py-3 text-sm font-semibold text-white/70 transition-all hover:border-white/40 hover:text-white"
-            >
-              Gérer mon lieu
-            </a>
+            <p className="italic" style={{ fontSize: "18px", color: "var(--black)", lineHeight: 1.65 }}>
+              <span style={{ color: "var(--coral)", fontWeight: 700, fontStyle: "normal" }}>« </span>
+              Le lieu nous parlait, mais nous n'avions pas d'outil pour l'écouter.
+              Casa Minga, c'est notre façon de lui répondre.
+              <span style={{ color: "var(--coral)", fontWeight: 700, fontStyle: "normal" }}> »</span>
+            </p>
           </div>
         </div>
       </div>

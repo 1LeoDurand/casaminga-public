@@ -1,62 +1,90 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export function Nav() {
-  const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
+  const close = () => setOpen(false);
 
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  const links = [
+    { label: "Les lieux", href: "#lieux" },
+    { label: "Événements", href: "#evenements" },
+    { label: "Rejoindre", href: "#adhesions" },
+    { label: "Tarifs", href: "#tarifs" },
+  ];
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "bg-night/95 backdrop-blur-md border-b border-white/[0.06]"
-          : "bg-transparent"
-      }`}
+      className="sticky top-0 z-50 border-b"
+      style={{
+        background: "rgba(255,251,240,0.92)",
+        backdropFilter: "blur(14px)",
+        WebkitBackdropFilter: "blur(14px)",
+        borderColor: "rgba(255,180,162,0.28)",
+      }}
+      aria-label="Navigation principale"
     >
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+      <div className="mx-auto flex max-w-[1280px] items-center gap-8 px-7 py-3.5">
         {/* Logo */}
-        <a href="/" className="flex items-center gap-2.5 group">
-          <span className="flex size-8 items-center justify-center rounded-lg bg-coral font-heading text-xs font-extrabold text-white">
+        <a href="#hero" className="flex items-center gap-2.5" style={{ color: "var(--black)" }}>
+          <span
+            className="flex size-9 items-center justify-center rounded-[11px] text-sm font-extrabold text-white"
+            style={{ background: "linear-gradient(135deg, var(--coral), var(--coral-dark))", boxShadow: "0 4px 12px rgba(255,138,101,0.32)" }}
+          >
             CM
           </span>
-          <span className="font-heading text-[15px] font-bold text-white">
-            Casa Minga
-          </span>
+          <span className="font-extrabold text-[17px] tracking-tight">Casa Minga</span>
         </a>
 
-        {/* Liens */}
-        <div className="hidden items-center gap-8 md:flex">
-          {[
-            { label: "Les lieux", href: "#lieux" },
-            { label: "Événements", href: "#evenements" },
-            { label: "Rejoindre", href: "#adhesions" },
-            { label: "Tarifs", href: "#tarifs" },
-          ].map((l) => (
-            <a
-              key={l.href}
-              href={l.href}
-              className="text-sm text-white/60 transition-colors hover:text-white"
-            >
-              {l.label}
-            </a>
+        {/* Liens desktop */}
+        <ul className="ml-auto hidden list-none items-center gap-7 md:flex">
+          {links.map((l) => (
+            <li key={l.href}>
+              <a href={l.href} className="text-[13.5px] font-medium" style={{ color: "var(--black)" }}>
+                {l.label}
+              </a>
+            </li>
           ))}
+        </ul>
+
+        {/* CTA desktop */}
+        <div className="hidden items-center gap-2.5 md:flex">
+          <a href="https://admin.casaminga.com" target="_blank" rel="noopener noreferrer" className="btn btn-secondary btn-sm">
+            Espace admin
+          </a>
+          <a href="#adhesions" className="btn btn-primary btn-sm">Rejoindre un lieu</a>
         </div>
 
-        {/* CTA */}
-        <a
-          href="https://admin.casaminga.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="hidden items-center gap-2 rounded-full border border-white/20 px-4 py-2 text-sm text-white/70 transition-all hover:border-white/40 hover:text-white md:flex"
+        {/* Burger mobile */}
+        <button
+          onClick={() => setOpen((v) => !v)}
+          aria-label="Menu"
+          className="ml-auto flex size-11 items-center justify-center rounded-[11px] border bg-white text-lg md:hidden"
+          style={{ borderColor: "var(--gray-mid)", color: "var(--black)" }}
         >
-          Espace admin
-          <span className="text-white/40">→</span>
-        </a>
+          {open ? "✕" : "☰"}
+        </button>
       </div>
+
+      {/* Drawer mobile */}
+      {open && (
+        <>
+          <div className="fixed inset-0 z-[101] md:hidden" style={{ background: "rgba(28,28,28,0.45)" }} onClick={close} />
+          <div
+            className="fixed right-0 top-0 bottom-0 z-[102] flex w-[min(86vw,360px)] flex-col overflow-y-auto px-7 pt-20 pb-8 md:hidden"
+            style={{ background: "var(--cream)", boxShadow: "-16px 0 48px rgba(28,28,28,0.12)" }}
+          >
+            <button onClick={close} aria-label="Fermer" className="absolute right-5 top-5 flex size-11 items-center justify-center rounded-[11px] border bg-white text-xl" style={{ borderColor: "var(--gray-mid)" }}>✕</button>
+            {links.map((l) => (
+              <a key={l.href} href={l.href} onClick={close} className="flex min-h-[56px] items-center border-b py-4 text-lg font-semibold" style={{ borderColor: "var(--gray-mid)", color: "var(--black)" }}>
+                {l.label}
+              </a>
+            ))}
+            <div className="mt-6 flex flex-col gap-2.5">
+              <a href="https://admin.casaminga.com" target="_blank" rel="noopener noreferrer" className="btn btn-secondary w-full">Espace admin</a>
+              <a href="#adhesions" onClick={close} className="btn btn-primary w-full">Rejoindre un lieu</a>
+            </div>
+          </div>
+        </>
+      )}
     </nav>
   );
 }

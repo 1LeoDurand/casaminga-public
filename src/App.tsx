@@ -37,13 +37,13 @@ export default function App() {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-night">
+      <div className="flex min-h-screen items-center justify-center" style={{ background: "var(--cream)" }}>
         <div className="flex flex-col items-center gap-4">
-          <span className="flex size-12 items-center justify-center rounded-xl bg-coral font-heading text-lg font-extrabold text-white">
+          <span className="flex size-12 items-center justify-center rounded-xl text-lg font-extrabold text-white" style={{ background: "linear-gradient(135deg, var(--coral), var(--coral-dark))" }}>
             CM
           </span>
-          <div className="h-1 w-32 overflow-hidden rounded-full bg-white/10">
-            <div className="h-full w-1/2 animate-[slide_1s_ease-in-out_infinite] rounded-full bg-coral" />
+          <div className="h-1 w-32 overflow-hidden rounded-full" style={{ background: "var(--peach-pale)" }}>
+            <div className="h-full w-1/2 animate-pulse rounded-full" style={{ background: "var(--coral)" }} />
           </div>
         </div>
       </div>
