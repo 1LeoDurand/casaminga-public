@@ -27,6 +27,8 @@ export interface PublicEvent {
   end_at: string;
   price: number | null;
   description: string | null;
+  photos?: string[] | null;
+  capacity?: number | null;
   org?: PublicOrg;
 }
 
@@ -82,4 +84,76 @@ export async function fetchCampaignTiers(campaignId: string) {
     .eq("campaign_id", campaignId)
     .order("amount");
   return data ?? [];
+}
+
+/**
+ * Nombre réel d'adhérents actifs (toutes orgs confondues).
+ * Renvoie `null` si la donnée n'est pas lisible publiquement (RLS) ou en cas
+ * d'erreur — l'appelant masque alors la statistique plutôt que d'afficher un faux chiffre.
+ */
+export async function fetchActiveMemberCount(): Promise<number | null> {
+  const { count, error } = await supabase
+    .from("organization_members")
+    .select("id", { count: "exact", head: true })
+    .eq("status", "actif");
+  if (error || count == null) return null;
+  return count;
+}
+
+const EVENT_COLUMNS = "id, organization_id, title, type, status, start_at, end_at, price, description, photos, capacity";
+
+export async function fetchDiscoveryEvents(limit = 100): Promise<PublicEvent[]> {
+  const now = new Date().toISOString();
+  const { data } = await supabase
+    .from("evenements")
+    .select("id, organization_id, title, type, status, start_at, end_at, price, description, photos, capacity")
+    .eq("show_on_public_site", true)
+    .gte("start_at", now)
+    .in("status", ["publie", "confirme", "planifie"])
+    .order("start_at")
+    .limit(limit);
+  return data ?? [];
+}
+
+
+const ORG_COLUMNS = "id, slug, name, description, structure, address, primary_color, website";
+
+export interface EventDetailData {
+  event: PublicEvent;
+  org: PublicOrg | null;
+  /** Autres événements à venir du même lieu (bloc « Plus d'événements »). */
+  siblings: PublicEvent[];
+}
+
+/**
+ * Charge le détail public d'un événement par son id : l'événement, son lieu,
+ * et jusqu'à 4 autres événements à venir du même lieu. Renvoie `null` si
+ * l'événement est introuvable.
+ */
+export async function fetchEventById(id: string): Promise<EventDetailData | null> {
+  const { data: event } = await supabase
+    .from("evenements")
+    .select(EVENT_COLUMNS)
+    .eq("id", id)
+    .maybeSingle();
+  if (!event) return null;
+
+  const { data: org } = await supabase
+    .from("organizations")
+    .select(ORG_COLUMNS)
+    .eq("id", event.organization_id)
+    .maybeSingle();
+
+  const now = new Date().toISOString();
+  const { data: siblings } = await supabase
+    .from("evenements")
+    .select(EVENT_COLUMNS)
+    .eq("organization_id", event.organization_id)
+    .neq("id", id)
+    .gte("start_at", now)
+    .in("status", ["publie", "confirme", "planifie"])
+    .order("start_at")
+    .limit(4);
+
+  return { event, org: org ?? null, siblings: siblings ?? [] };
 }
