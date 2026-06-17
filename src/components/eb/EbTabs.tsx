@@ -1,10 +1,10 @@
 export type TabId = "tous" | "pourVous" | "aujourdhui" | "weekend";
 
 const TABS: { id: TabId; label: string }[] = [
-  { id: "tous", label: "Tout" },
-  { id: "pourVous", label: "Pour vous" },
+  { id: "tous",      label: "Tout" },
+  { id: "pourVous",  label: "Pour vous" },
   { id: "aujourdhui", label: "Aujourd'hui" },
-  { id: "weekend", label: "Ce week-end" },
+  { id: "weekend",   label: "Ce week-end" },
 ];
 
 interface EbTabsProps {
@@ -14,7 +14,7 @@ interface EbTabsProps {
 
 export function EbTabs({ active, onTabChange }: EbTabsProps) {
   return (
-    <div className="flex gap-1 overflow-x-auto no-scrollbar" role="tablist">
+    <div className="flex gap-0 overflow-x-auto border-b no-scrollbar" style={{ borderColor: "var(--gray-mid)" }} role="tablist">
       {TABS.map(({ id, label }) => {
         const isActive = active === id;
         return (
@@ -24,14 +24,16 @@ export function EbTabs({ active, onTabChange }: EbTabsProps) {
             role="tab"
             aria-selected={isActive}
             onClick={() => onTabChange(id)}
-            className="shrink-0 rounded-full px-5 py-2 text-sm font-semibold transition-all"
-            style={{
-              background: isActive ? "var(--coral)" : "transparent",
-              color: isActive ? "#fff" : "var(--gray)",
-              border: isActive ? "none" : "1.5px solid var(--gray-mid)",
-            }}
+            className="relative shrink-0 px-5 pb-3 pt-1 text-sm font-semibold transition-colors"
+            style={{ color: isActive ? "var(--black)" : "var(--gray)", background: "none", border: "none" }}
           >
             {label}
+            {isActive && (
+              <span
+                className="absolute bottom-0 left-0 right-0 h-0.5 rounded-full"
+                style={{ background: "var(--coral)" }}
+              />
+            )}
           </button>
         );
       })}

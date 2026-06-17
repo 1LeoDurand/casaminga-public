@@ -1,14 +1,20 @@
-import { TYPE_LABELS, TYPE_GLYPHS } from "../../lib/event-meta";
+import {
+  LayoutGrid, Hammer, Music, Palette, Mic, Film,
+  ShoppingBag, BookOpen, Calendar,
+} from "lucide-react";
+import { TYPE_LABELS } from "../../lib/event-meta";
 
-const CATEGORY_COLORS: Record<string, string> = {
-  atelier: "#FFD54F",
-  concert: "#FF8A65",
-  exposition: "#B3D4DE",
-  conference: "#81C784",
-  spectacle: "#CE93D8",
-  marche: "#FFCC80",
-  formation: "#80DEEA",
-  autre: "#EF9A9A",
+type LucideIcon = React.ComponentType<{ size?: number; strokeWidth?: number; style?: React.CSSProperties }>;
+
+const CATEGORY_ICONS: Record<string, LucideIcon> = {
+  atelier:    Hammer,
+  concert:    Music,
+  exposition: Palette,
+  conference: Mic,
+  spectacle:  Film,
+  marche:     ShoppingBag,
+  formation:  BookOpen,
+  autre:      Calendar,
 };
 
 const CATEGORIES = Object.keys(TYPE_LABELS);
@@ -20,66 +26,67 @@ interface EbCategoryIconsProps {
 
 export function EbCategoryIcons({ activeCategory, onCategoryChange }: EbCategoryIconsProps) {
   return (
-    <section className="border-b py-5" style={{ borderColor: "var(--gray-mid)" }}>
+    <section className="border-b bg-white py-5" style={{ borderColor: "var(--gray-mid)" }}>
       <div className="wrap">
-        <div className="flex gap-4 overflow-x-auto pb-1 no-scrollbar">
-          {/* Bouton "Tout" */}
-          <button
-            type="button"
+        <div className="flex gap-5 overflow-x-auto pb-1 no-scrollbar">
+          {/* Tout */}
+          <CategoryBtn
+            label="Tout"
+            icon={LayoutGrid}
+            isActive={activeCategory === null}
             onClick={() => onCategoryChange(null)}
-            className="flex shrink-0 flex-col items-center gap-2"
-          >
-            <span
-              className="flex h-14 w-14 items-center justify-center rounded-full text-2xl transition-all"
-              style={{
-                background: activeCategory === null ? "var(--peach-soft)" : "var(--gray-light)",
-                border: activeCategory === null ? "2.5px solid var(--coral)" : "2px solid transparent",
-                boxShadow: activeCategory === null ? "var(--shadow-md)" : "none",
-              }}
-            >
-              ✨
-            </span>
-            <span
-              className="text-xs font-semibold"
-              style={{ color: activeCategory === null ? "var(--coral-deep)" : "var(--gray)" }}
-            >
-              Tout
-            </span>
-          </button>
-
-          {CATEGORIES.map((cat) => {
-            const isActive = activeCategory === cat;
-            return (
-              <button
-                key={cat}
-                type="button"
-                onClick={() => onCategoryChange(isActive ? null : cat)}
-                className="flex shrink-0 flex-col items-center gap-2"
-              >
-                <span
-                  className="flex h-14 w-14 items-center justify-center rounded-full text-2xl transition-all"
-                  style={{
-                    background: isActive
-                      ? CATEGORY_COLORS[cat] ?? "var(--peach-soft)"
-                      : "var(--gray-light)",
-                    border: isActive ? `2.5px solid ${CATEGORY_COLORS[cat] ?? "var(--coral)"}` : "2px solid transparent",
-                    boxShadow: isActive ? "var(--shadow-md)" : "none",
-                    filter: isActive ? "none" : "grayscale(0.2)",
-                  }}
-                >
-                  {TYPE_GLYPHS[cat] ?? "🎟️"}
-                </span>
-                <span
-                  className="text-xs font-semibold"
-                  style={{ color: isActive ? "var(--black)" : "var(--gray)" }}
-                >
-                  {TYPE_LABELS[cat]}
-                </span>
-              </button>
-            );
-          })}
+          />
+          {CATEGORIES.map((cat) => (
+            <CategoryBtn
+              key={cat}
+              label={TYPE_LABELS[cat]}
+              icon={CATEGORY_ICONS[cat] ?? Calendar}
+              isActive={activeCategory === cat}
+              onClick={() => onCategoryChange(activeCategory === cat ? null : cat)}
+            />
+          ))}
         </div>
       </div>
     </section>
+  );
+}
+
+function CategoryBtn({
+  label,
+  icon: Icon,
+  isActive,
+  onClick,
+}: {
+  label: string;
+  icon: LucideIcon;
+  isActive: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className="flex shrink-0 flex-col items-center gap-2 transition-opacity hover:opacity-80"
+    >
+      <span
+        className="flex h-14 w-14 items-center justify-center rounded-full transition-all"
+        style={{
+          background: isActive ? "var(--peach-pale)" : "#f8f8f8",
+          border: isActive ? "1.5px solid var(--coral)" : "1.5px solid var(--gray-mid)",
+        }}
+      >
+        <Icon
+          size={22}
+          strokeWidth={1.5}
+          style={{ color: isActive ? "var(--coral-deep)" : "var(--gray)" }}
+        />
+      </span>
+      <span
+        className="text-[11px] font-semibold"
+        style={{ color: isActive ? "var(--coral-deep)" : "var(--gray)" }}
+      >
+        {label}
+      </span>
+    </button>
   );
 }

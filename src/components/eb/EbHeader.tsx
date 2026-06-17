@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { Search, MapPin } from "lucide-react";
 
 interface EbHeaderProps {
   search: string;
@@ -11,56 +12,53 @@ interface EbHeaderProps {
 export function EbHeader({ search, onSearch, city, cities, onCityChange }: EbHeaderProps) {
   return (
     <header
-      className="sticky top-0 z-50 border-b"
-      style={{ background: "#fff", borderColor: "var(--gray-mid)", boxShadow: "var(--shadow-sm)" }}
+      className="sticky top-0 z-50 border-b bg-white"
+      style={{ borderColor: "var(--gray-mid)", boxShadow: "0 1px 3px rgba(0,0,0,0.06)" }}
     >
-      <div className="wrap flex items-center gap-4 py-3">
+      <div className="wrap flex h-16 items-center gap-5">
         {/* Logo */}
         <Link
           to="/design-accueil"
-          className="shrink-0 text-xl font-extrabold tracking-tight"
-          style={{ color: "var(--coral-deep)", letterSpacing: "-0.5px" }}
+          className="shrink-0 text-[18px] font-bold tracking-tight"
+          style={{ fontFamily: "'Playfair Display', serif", color: "var(--coral-deep)", letterSpacing: "-0.3px" }}
         >
           Casa<span style={{ color: "var(--black)" }}>Minga</span>
         </Link>
 
+        {/* Séparateur vertical */}
+        <div className="hidden h-5 w-px bg-gray-200 sm:block" />
+
         {/* Barre de recherche */}
         <div className="relative flex-1">
-          <svg
+          <Search
+            size={15}
             className="absolute left-3 top-1/2 -translate-y-1/2"
-            width="16" height="16" viewBox="0 0 24 24" fill="none"
-            stroke="var(--gray)" strokeWidth="2.5" strokeLinecap="round"
+            style={{ color: "var(--gray)" }}
             aria-hidden="true"
-          >
-            <circle cx="11" cy="11" r="8" />
-            <line x1="21" y1="21" x2="16.65" y2="16.65" />
-          </svg>
+          />
           <input
             type="search"
             placeholder="Rechercher un événement, un lieu…"
             value={search}
             onChange={(e) => onSearch(e.target.value)}
-            className="w-full rounded-full border py-2 pl-9 pr-4 text-sm"
+            className="w-full rounded-lg border bg-white py-2 pl-9 pr-4 text-sm transition-colors"
             style={{
               borderColor: "var(--gray-mid)",
-              background: "var(--gray-light)",
               color: "var(--black)",
               outline: "none",
             }}
+            onFocus={(e) => (e.currentTarget.style.borderColor = "var(--coral)")}
+            onBlur={(e) => (e.currentTarget.style.borderColor = "var(--gray-mid)")}
           />
         </div>
 
         {/* Sélecteur de ville */}
-        <div className="hidden shrink-0 items-center gap-1 sm:flex">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
-            stroke="var(--coral-deep)" strokeWidth="2.5" strokeLinecap="round" aria-hidden="true">
-            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-            <circle cx="12" cy="10" r="3" />
-          </svg>
+        <div className="hidden shrink-0 items-center gap-1.5 sm:flex">
+          <MapPin size={14} style={{ color: "var(--coral-deep)" }} aria-hidden="true" />
           <select
             value={city}
             onChange={(e) => onCityChange(e.target.value)}
-            className="border-0 bg-transparent text-sm font-semibold"
+            className="border-0 bg-transparent text-sm font-medium"
             style={{ color: "var(--black)", cursor: "pointer" }}
           >
             <option value="">Toutes les villes</option>
@@ -73,8 +71,16 @@ export function EbHeader({ search, onSearch, city, cities, onCityChange }: EbHea
         {/* Lien adhérent */}
         <Link
           to="/"
-          className="hidden shrink-0 text-sm font-semibold sm:block"
-          style={{ color: "var(--coral-deep)" }}
+          className="hidden shrink-0 rounded-lg border px-4 py-1.5 text-xs font-semibold transition-colors sm:block"
+          style={{ borderColor: "var(--gray-mid)", color: "var(--black)" }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.borderColor = "var(--coral)";
+            e.currentTarget.style.color = "var(--coral-deep)";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.borderColor = "var(--gray-mid)";
+            e.currentTarget.style.color = "var(--black)";
+          }}
         >
           Espace adhérent
         </Link>
