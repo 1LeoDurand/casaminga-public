@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from "react";
 import { List, Map as MapIcon } from "lucide-react";
-import { fetchDiscoveryEvents, fetchPublicOrgs } from "../lib/supabase";
-import type { PublicEvent, PublicOrg } from "../lib/supabase";
+import { fetchDiscoveryEvents, fetchPublicOrgs, fetchPublicEstablishments } from "../lib/supabase";
+import type { PublicEvent, PublicOrg, PublicEstablishment } from "../lib/supabase";
 import { isToday, isThisWeekend } from "../lib/event-meta";
 import { EbHeader } from "../components/eb/EbHeader";
 import { EbPromoBanner } from "../components/eb/EbPromoBanner";
@@ -25,6 +25,7 @@ function extractCity(address: string | null): string | null {
 export function DesignAccueil() {
   const [events, setEvents] = useState<PublicEvent[]>([]);
   const [orgs, setOrgs] = useState<PublicOrg[]>([]);
+  const [establishments, setEstablishments] = useState<PublicEstablishment[]>([]);
   const [loading, setLoading] = useState(true);
 
   const [search, setSearch] = useState("");
@@ -36,8 +37,8 @@ export function DesignAccueil() {
   const [viewMode, setViewMode] = useState<"liste" | "carte">("liste");
 
   useEffect(() => {
-    Promise.all([fetchDiscoveryEvents(100), fetchPublicOrgs()])
-      .then(([ev, or]) => { setEvents(ev); setOrgs(or); })
+    Promise.all([fetchDiscoveryEvents(100), fetchPublicOrgs(), fetchPublicEstablishments()])
+      .then(([ev, or, es]) => { setEvents(ev); setOrgs(or); setEstablishments(es); })
       .catch(console.error)
       .finally(() => setLoading(false));
   }, []);
@@ -146,7 +147,7 @@ export function DesignAccueil() {
         {viewMode === "liste" ? (
           <EbEventGrid events={filteredEvents} orgMap={orgMap} loading={loading} />
         ) : (
-          <EbMap orgs={orgs} eventCounts={eventCounts} />
+          <EbMap establishments={establishments} orgMap={orgMap} />
         )}
 
         {!loading && filteredEvents.length === 0 && viewMode === "liste" && (

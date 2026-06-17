@@ -17,6 +17,16 @@ export interface PublicOrg {
   website: string | null;
 }
 
+export interface PublicEstablishment {
+  id: string;
+  name: string;
+  slug: string;
+  city: string | null;
+  latitude: number | null;
+  longitude: number | null;
+  organization_id: string;
+}
+
 export interface PublicEvent {
   id: string;
   organization_id: string;
@@ -53,6 +63,17 @@ export async function fetchPublicOrgs(): Promise<PublicOrg[]> {
     .from("organizations")
     .select("id, slug, name, description, structure, address, primary_color, website")
     .order("name");
+  return data ?? [];
+}
+
+/** Établissements actifs géolocalisés (lat/lng saisis via l'autocomplétion admin) → carte. */
+export async function fetchPublicEstablishments(): Promise<PublicEstablishment[]> {
+  const { data } = await supabase
+    .from("establishments")
+    .select("id, name, slug, city, latitude, longitude, organization_id")
+    .eq("active", true)
+    .not("latitude", "is", null)
+    .not("longitude", "is", null);
   return data ?? [];
 }
 
