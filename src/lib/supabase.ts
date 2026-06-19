@@ -1,4 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
+import { mergeSiteContent, type SiteContent } from "./siteContent";
 
 const url = import.meta.env.VITE_SUPABASE_URL as string;
 const key = import.meta.env.VITE_SUPABASE_ANON_KEY as string;
@@ -177,4 +178,118 @@ export async function fetchEventById(id: string): Promise<EventDetailData | null
     .limit(4);
 
   return { event, org: org ?? null, siblings: siblings ?? [] };
+}
+
+// ══════════════════════════════════════════════════════════════
+//  Fiche d'un lieu — casaminga.com/<slug>  (belle URL, vitrine)
+//  Lecture seule : tout le transactionnel renvoie vers admin.casaminga.com.
+// ══════════════════════════════════════════════════════════════
+
+export const ADMIN_BASE = "https://admin.casaminga.com";
+
+export interface LieuOrg extends PublicOrg {
+  hours: string | null;
+}
+
+export interface LieuCampaign extends PublicCampaign {
+  tiers: { id: string; name: string; amount: number }[];
+}
+
+export interface LieuSpace {
+  id: string;
+  name: string;
+  type: string | null;
+  capacity: number | null;
+  area: number | null;
+  price_hour: number | null;
+  price_day: number | null;
+  price_person: number | null;
+  description: string | null;
+  photos: string[] | null;
+}
+
+export interface LieuData {
+  org: LieuOrg;
+  title: string;
+  seoDescription: string | null;
+  content: SiteContent;
+  /** Événements publics à venir, triés (page d'accueil = 6 premiers). */
+  events: PublicEvent[];
+  campaigns: LieuCampaign[];
+  spaces: LieuSpace[];
+}
+
+const LIEU_ORG_COLUMNS =
+  "id, slug, name, description, structure, address, hours, primary_color, website";
+
+/**
+ * Charge la vitrine publique d'un lieu par son slug d'organisation.
+ *
+ * Renvoie `null` si l'org n'existe pas OU si son site n'est pas publié
+ * (RLS : public_sites lisible uniquement quand status='publie'). Toutes les
+ * sous-ressources (events, campagnes, espaces) reposent sur leurs policies
+ * de lecture publique respectives.
+ */
+export async function fetchLieuBySlug(slug: string): Promise<LieuData | null> {
+  const { data: org } = await supabase
+    .from("organizations")
+    .select(LIEU_ORG_COLUMNS)
+    .eq("slug", slug)
+    .maybeSingle();
+  if (!org) return null;
+
+  // Gate de publication : le site doit exister ET être publié.
+  const { data: site } = await supabase
+    .from("public_sites")
+    .select("title, seo_description, content_blocks, status")
+    .eq("organization_id", org.id)
+    .eq("status", "publie")
+    .maybeSingle();
+  if (!site) return null;
+
+  const now = new Date().toISOString();
+  const [eventsRes, campaignsRes, spacesRes] = await Promise.all([
+    supabase
+      .from("evenements")
+      .select(EVENT_COLUMNS)
+      .eq("organization_id", org.id)
+      .eq("show_on_public_site", true)
+      .gte("start_at", now)
+      .in("status", ["publie", "confirme", "planifie"])
+      .order("start_at"),
+    supabase
+      .from("membership_campaigns")
+      .select("id, organization_id, title, slug, description, status, show_member_count, show_collected, max_members")
+      .eq("organization_id", org.id)
+      .eq("status", "publie")
+      .order("created_at", { ascending: false }),
+    supabase
+      .from("spaces")
+      .select("id, name, type, capacity, area, price_hour, price_day, price_person, description, photos")
+      .eq("organization_id", org.id)
+      .eq("status", "disponible")
+      .order("created_at", { ascending: false }),
+  ]);
+
+  const events = (eventsRes.data ?? []) as PublicEvent[];
+  const spaces = (spacesRes.data ?? []) as LieuSpace[];
+
+  // Tiers des campagnes (en parallèle).
+  const campaignsRaw = campaignsRes.data ?? [];
+  const campaigns: LieuCampaign[] = await Promise.all(
+    campaignsRaw.map(async (cp) => ({
+      ...(cp as PublicCampaign),
+      tiers: await fetchCampaignTiers(cp.id),
+    }))
+  );
+
+  return {
+    org: org as LieuOrg,
+    title: site.title ?? org.name,
+    seoDescription: site.seo_description ?? null,
+    content: mergeSiteContent(site.content_blocks),
+    events,
+    campaigns,
+    spaces,
+  };
 }
