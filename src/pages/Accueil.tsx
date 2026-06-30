@@ -80,10 +80,16 @@ export function Accueil() {
         {/* ── Phrase de liaison Casaminga ─────────────────────── */}
         <section style={{ background: "var(--peach-pale)", borderTop: "1px solid var(--peach)", borderBottom: "1px solid var(--peach)" }}>
           <div className="wrap" style={{ padding: "clamp(36px,5vw,56px) 28px", textAlign: "center" }}>
-            <p style={{ fontSize: "clamp(18px,2.2vw,24px)", lineHeight: 1.5, maxWidth: "60ch", margin: "0 auto", color: "var(--black-soft)" }}>
-              <strong>Casaminga</strong> est la plateforme de La Manufacture des Pays : elle rend publique et
+            <p style={{ fontSize: "clamp(18px,2.2vw,24px)", lineHeight: 1.5, maxWidth: "62ch", margin: "0 auto", color: "var(--black-soft)" }}>
+              <strong>Casaminga</strong> est le site de La Manufacture des Pays : il rend publique et
               actionnable la vie du réseau de lieux animés par l'association — agenda, ateliers, rencontres et
               chantiers participatifs ouverts à toutes et tous.
+            </p>
+            <p style={{ fontSize: "clamp(15px,1.7vw,18px)", lineHeight: 1.6, maxWidth: "60ch", margin: "16px auto 0", color: "var(--gray)" }}>
+              Dans le prolongement de notre mission d'entraide, Casaminga a vocation à devenir une
+              plateforme de <strong>soutien aux associations et aux tiers-lieux</strong> : mutualiser les
+              outils, donner de la visibilité aux initiatives locales et renforcer le lien entre les lieux
+              qui font vivre les territoires.
             </p>
           </div>
         </section>
