@@ -32,12 +32,13 @@ export function SiteHeader() {
       }}
     >
       <div className="wrap flex h-16 items-center gap-6">
-        <Link
-          to="/"
-          className="shrink-0 text-[18px] font-bold tracking-tight"
-          style={{ color: "var(--coral-deep)", letterSpacing: "-0.3px" }}
-        >
-          La Manufacture <span style={{ color: "var(--black)" }}>des Pays</span>
+        <Link to="/" className="shrink-0 leading-none" style={{ letterSpacing: "-0.3px" }}>
+          <span className="block text-[18px] font-bold tracking-tight" style={{ color: "var(--coral-deep)" }}>
+            Casaminga
+          </span>
+          <span className="block text-[11px] font-medium" style={{ color: "var(--gray)", marginTop: "2px" }}>
+            par La Manufacture des Pays
+          </span>
         </Link>
         <nav
           className="ml-auto hidden items-center gap-6 text-[13.5px] font-medium md:flex"
