@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { SiteHeader, HELLOASSO_ADHESION } from "../components/SiteHeader";
+import { SiteFooter } from "../components/SiteFooter";
 import { fetchUpcomingEvents, fetchPublicOrgs, type PublicEvent, type PublicOrg } from "../lib/supabase";
 import { fmtDate, fmtPrice, TYPE_GLYPHS } from "../lib/event-meta";
-
-const HELLOASSO_ADHESION =
-  "https://www.helloasso.com/associations/la-manufacture-des-pays/adhesions/bulletin-d-adhesion-2023";
 
 /**
  * Accueil institutionnel La Manufacture des Pays (asso loi 1901, éditrice de
@@ -12,8 +11,8 @@ const HELLOASSO_ADHESION =
  * et sa mission AVANT la découverte d'événements (la grille Eventbrite est
  * « mise de côté » en /agenda). Voir DIRECTIVES-AD-GRANT.md [A3].
  *
- * NB : le header et le footer sont ici en ligne (provisoire). Les items NAV et
- * F de la directive les extrairont en composants partagés à toutes les pages.
+ * Header et footer sont les composants partagés SiteHeader / SiteFooter
+ * (items NAV et F de la directive).
  */
 export function Accueil() {
   const [events, setEvents] = useState<PublicEvent[]>([]);
@@ -30,32 +29,7 @@ export function Accueil() {
 
   return (
     <div style={{ background: "var(--cream)", minHeight: "100vh" }}>
-      {/* ── Header provisoire (sera remplacé par NAV) ───────────── */}
-      <header
-        className="sticky top-0 z-50 border-b"
-        style={{ background: "rgba(255,251,240,0.92)", backdropFilter: "blur(14px)", WebkitBackdropFilter: "blur(14px)", borderColor: "var(--gray-mid)" }}
-      >
-        <div className="wrap flex h-16 items-center gap-6">
-          <Link to="/" className="shrink-0 text-[18px] font-bold tracking-tight" style={{ color: "var(--coral-deep)", letterSpacing: "-0.3px" }}>
-            La Manufacture <span style={{ color: "var(--black)" }}>des Pays</span>
-          </Link>
-          <nav className="ml-auto hidden items-center gap-6 text-[13.5px] font-medium md:flex" aria-label="Navigation principale">
-            <Link to="/" style={{ color: "var(--black)" }}>Accueil</Link>
-            <Link to="/association" style={{ color: "var(--black)" }}>L'association</Link>
-            <Link to="/nos-actions" style={{ color: "var(--black)" }}>Nos actions</Link>
-            <Link to="/agenda" style={{ color: "var(--black)" }}>Agenda</Link>
-            <Link to="/contact" style={{ color: "var(--black)" }}>Contact</Link>
-          </nav>
-          <a
-            href={HELLOASSO_ADHESION}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn btn-primary btn-sm ml-auto md:ml-0"
-          >
-            Adhérer
-          </a>
-        </div>
-      </header>
+      <SiteHeader />
 
       <main>
         {/* ── Hero institutionnel ─────────────────────────────── */}
@@ -166,27 +140,7 @@ export function Accueil() {
         )}
       </main>
 
-      {/* ── Footer provisoire (sera remplacé par F) ─────────────── */}
-      <footer className="border-t" style={{ borderColor: "var(--gray-mid)", background: "#fff" }}>
-        <div className="wrap" style={{ padding: "48px 28px" }}>
-          <p style={{ fontWeight: 700, color: "var(--black)" }}>La Manufacture des Pays</p>
-          <p style={{ fontSize: "13px", color: "var(--gray)", marginTop: "6px", maxWidth: "60ch" }}>
-            Édité par l'association La Manufacture des Pays — loi 1901, RNA <span>[À COMPLÉTER]</span> —
-            La Distillerie, 10 Rue la sous Préfecture, 34700 Lodève. Casaminga est la plateforme numérique
-            de l'association.
-          </p>
-          <nav className="mt-5 flex flex-wrap gap-x-6 gap-y-2 text-[13px]" style={{ color: "var(--gray)" }} aria-label="Liens de pied de page">
-            <Link to="/association" style={{ color: "var(--gray)" }}>L'association</Link>
-            <Link to="/nos-actions" style={{ color: "var(--gray)" }}>Nos actions</Link>
-            <Link to="/agenda" style={{ color: "var(--gray)" }}>Agenda</Link>
-            <Link to="/contact" style={{ color: "var(--gray)" }}>Contact</Link>
-            <a href="mailto:manufacturedespays@gmail.com" style={{ color: "var(--gray)" }}>manufacturedespays@gmail.com</a>
-          </nav>
-          <p className="mt-6 text-xs" style={{ color: "var(--gray)" }}>
-            © {new Date().getFullYear()} La Manufacture des Pays
-          </p>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }
