@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import './index.css'
 import App from './App.tsx'
+import { Accueil } from './pages/Accueil.tsx'
 import { EventDetail } from './pages/EventDetail.tsx'
 import { DesignAccueil } from './pages/DesignAccueil.tsx'
 import { LieuHome } from './pages/lieu/LieuHome.tsx'
@@ -15,8 +16,10 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<App />} />
+        {/* Accueil institutionnel La Manufacture des Pays (objectif Ad Grant). */}
+        <Route path="/" element={<Accueil />} />
         <Route path="/evenement/:id" element={<EventDetail />} />
+        {/* Accueil découverte « Eventbrite » conservé mais mis de côté (deviendra /agenda). */}
         <Route path="/design-accueil" element={<DesignAccueil />} />
         {/* Vitrine d'un lieu : casaminga.com/<slug> (belle URL). Les segments
             statiques ci-dessus l'emportent sur :lieuSlug (ranking react-router). */}
