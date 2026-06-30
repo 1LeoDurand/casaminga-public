@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { SiteHeader, HELLOASSO_ADHESION } from "../components/SiteHeader";
 import { SiteFooter } from "../components/SiteFooter";
+import logoManufacture from "../assets/logo-manufacture.jpg";
 import { fetchUpcomingEvents, fetchPublicOrgs, type PublicEvent, type PublicOrg } from "../lib/supabase";
 import { fmtDate, fmtPrice, TYPE_GLYPHS } from "../lib/event-meta";
 
@@ -32,8 +33,17 @@ export function Accueil() {
       <SiteHeader />
 
       <main>
+        {/* ── Bandeau logo (hero) — logo officiel de l'association ─ */}
+        <section className="wrap" style={{ paddingTop: "clamp(36px,6vw,64px)", textAlign: "center" }}>
+          <img
+            src={logoManufacture}
+            alt="La Manufacture des Pays — deux mains, l'une dessinée d'un plan de ville, l'autre d'un paysage, se tendant l'une vers l'autre"
+            style={{ width: "min(500px, 90%)", height: "auto", margin: "0 auto", mixBlendMode: "multiply" }}
+          />
+        </section>
+
         {/* ── Hero institutionnel ─────────────────────────────── */}
-        <section className="wrap" style={{ paddingTop: "clamp(56px,8vw,96px)", paddingBottom: "clamp(40px,6vw,72px)" }}>
+        <section className="wrap" style={{ paddingTop: "clamp(20px,3vw,36px)", paddingBottom: "clamp(40px,6vw,72px)" }}>
           <span className="eyebrow">Association loi 1901</span>
           <h1 style={{ maxWidth: "16ch" }}>Penser collectivement le patrimoine de demain</h1>
           <p className="lead" style={{ marginTop: "22px" }}>
