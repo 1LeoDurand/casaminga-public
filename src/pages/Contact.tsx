@@ -5,8 +5,6 @@ import { SiteFooter } from "../components/SiteFooter";
  * Page « Contact » + identité légale (item A2 des DIRECTIVES-AD-GRANT.md).
  * Exigence Google Ad Grant : identité de l'éditeur vérifiable (adresse réelle,
  * email, loi 1901, RNA/SIREN). Aucun champ non câblé — contact par email direct.
- *
- * RNA / SIREN : placeholders à remplacer dès que Léo fournit les numéros.
  */
 export function Contact() {
   return (
@@ -80,11 +78,15 @@ export function Contact() {
                 </p>
                 <dl style={{ margin: "18px 0 0", display: "grid", gridTemplateColumns: "auto 1fr", gap: "8px 18px", fontSize: "14px" }}>
                   <dt style={{ color: "var(--gray)" }}>Statut</dt>
-                  <dd style={{ margin: 0, color: "var(--black-soft)" }}>Association loi 1901</dd>
+                  <dd style={{ margin: 0, color: "var(--black-soft)" }}>Association déclarée (loi 1901)</dd>
                   <dt style={{ color: "var(--gray)" }}>RNA</dt>
-                  <dd style={{ margin: 0, color: "var(--black-soft)" }}>[À COMPLÉTER]</dd>
-                  <dt style={{ color: "var(--gray)" }}>SIREN / SIRET</dt>
-                  <dd style={{ margin: 0, color: "var(--black-soft)" }}>[À COMPLÉTER]</dd>
+                  <dd style={{ margin: 0, color: "var(--black-soft)" }}>W342002465 — inscrite le 12/10/2016</dd>
+                  <dt style={{ color: "var(--gray)" }}>SIREN</dt>
+                  <dd style={{ margin: 0, color: "var(--black-soft)" }}>824 820 856</dd>
+                  <dt style={{ color: "var(--gray)" }}>SIRET (siège)</dt>
+                  <dd style={{ margin: 0, color: "var(--black-soft)" }}>824 820 856 00014</dd>
+                  <dt style={{ color: "var(--gray)" }}>TVA</dt>
+                  <dd style={{ margin: 0, color: "var(--black-soft)" }}>FR49824820856</dd>
                 </dl>
               </div>
 
