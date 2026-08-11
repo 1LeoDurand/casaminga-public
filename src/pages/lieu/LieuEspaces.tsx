@@ -33,7 +33,16 @@ export function LieuEspaces() {
 
         {spaces.length === 0 ? (
           <div className="card mt-8 px-6 py-12 text-center text-sm" style={{ color: "var(--gray)" }}>
-            Les espaces réservables seront bientôt présentés ici.
+            Aucun espace n'est publié à la réservation en ligne. Écrivez au lieu pour connaître les
+            disponibilités et les conditions d'accueil.
+            <a
+              href={`${ADMIN_BASE}/site/${slug}#contact`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-secondary btn-sm mt-4 block w-fit mx-auto"
+            >
+              Contacter le lieu
+            </a>
           </div>
         ) : (
           <div className="mt-8 grid gap-5 sm:grid-cols-2">

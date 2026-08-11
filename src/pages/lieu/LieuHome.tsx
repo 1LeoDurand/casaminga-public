@@ -96,7 +96,7 @@ export function LieuHome() {
           </div>
           {previewEvents.length === 0 ? (
             <div className="card mt-6 px-6 py-10 text-center text-sm" style={{ color: "var(--gray)" }}>
-              Pas d'événement prévu pour l'instant — revenez bientôt&nbsp;!
+              Aucun événement n'est programmé à cette date.
             </div>
           ) : (
             <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

@@ -41,7 +41,15 @@ export function LieuAgenda() {
 
         {events.length === 0 ? (
           <div className="card mt-8 px-6 py-12 text-center text-sm" style={{ color: "var(--gray)" }}>
-            Pas d'événement prévu pour l'instant — revenez bientôt&nbsp;!
+            Aucun événement n'est programmé à cette date. Écrivez au lieu pour connaître sa prochaine programmation.
+            <a
+              href={`${ADMIN_BASE}/site/${slug}#contact`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-secondary btn-sm mt-4 block w-fit mx-auto"
+            >
+              Contacter le lieu
+            </a>
           </div>
         ) : (
           [...byMonth.entries()].map(([month, list]) => (

@@ -68,9 +68,11 @@ export function EbHeader({ search, onSearch, city, cities, onCityChange }: EbHea
           </select>
         </div>
 
-        {/* Lien adhérent */}
-        <Link
-          to="/"
+        {/* Lien vers l'espace de gestion (cible réelle du libellé « adhérent »). */}
+        <a
+          href="https://admin.casaminga.com"
+          target="_blank"
+          rel="noopener noreferrer"
           className="hidden shrink-0 rounded-lg border px-4 py-1.5 text-xs font-semibold transition-colors sm:block"
           style={{ borderColor: "var(--gray-mid)", color: "var(--black)" }}
           onMouseEnter={(e) => {
@@ -83,7 +85,7 @@ export function EbHeader({ search, onSearch, city, cities, onCityChange }: EbHea
           }}
         >
           Espace adhérent
-        </Link>
+        </a>
       </div>
     </header>
   );

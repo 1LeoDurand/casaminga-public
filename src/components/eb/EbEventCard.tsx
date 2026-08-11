@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Heart } from "lucide-react";
 import type { PublicEvent, PublicOrg } from "../../lib/supabase";
 import { TYPE_LABELS, fmtPrice } from "../../lib/event-meta";
 import { resolveEventImage } from "../../lib/event-images";
@@ -77,15 +76,7 @@ export function EbEventCard({ event, org }: EbEventCardProps) {
           {label}
         </span>
 
-        {/* Bouton cœur */}
-        <button
-          type="button"
-          aria-label="Sauvegarder"
-          className="absolute right-3 top-3 z-[2] flex h-8 w-8 items-center justify-center rounded-full bg-white transition-transform hover:scale-110"
-          style={{ boxShadow: "0 1px 4px rgba(0,0,0,0.15)" }}
-        >
-          <Heart size={14} strokeWidth={1.5} style={{ color: "var(--gray)" }} />
-        </button>
+        {/* Favoris : retiré du rendu (non câblé). À réintroduire avec la feature. */}
       </div>
 
       {/* Corps */}

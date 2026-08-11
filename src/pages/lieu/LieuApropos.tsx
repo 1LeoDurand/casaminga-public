@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useLieu } from "./useLieu";
 import { LieuShell, LieuLoading, LieuNotFound, LazyImg } from "./LieuShell";
 
@@ -21,7 +21,18 @@ export function LieuApropos() {
             {c.about_text.split("\n").filter(Boolean).map((p, i) => <p key={i}>{p}</p>)}
           </div>
         ) : (
-          <p className="lead mt-6">Présentation à venir.</p>
+          /* Pas de texte publié : on retombe sur la description de la structure,
+             sinon sur une phrase factuelle + un lien réel vers son accueil. */
+          <>
+            <p className="lead mt-6">
+              {org.description
+                ? org.description
+                : `${org.name} fait partie du réseau Casaminga.`}
+            </p>
+            <Link to={`/${org.slug}`} className="btn btn-secondary btn-sm mt-6">
+              Accueil du lieu
+            </Link>
+          </>
         )}
         {(org.address || org.hours) ? (
           <p className="mt-8 text-sm" style={{ color: "var(--gray)" }}>

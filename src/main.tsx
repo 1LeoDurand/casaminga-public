@@ -2,7 +2,9 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import './index.css'
-import App from './App.tsx'
+// NOTE : App.tsx (ancienne landing « découverte ») reste dans le repo mais n'est
+// plus rendue — elle contenait des contrôles non câblés (recherche désactivée,
+// onglet « Pour toi », destinations inertes) incompatibles avec la revue Ad Grant.
 import { Accueil } from './pages/Accueil.tsx'
 import { Association } from './pages/Association.tsx'
 import { NosActions } from './pages/NosActions.tsx'
@@ -15,6 +17,7 @@ import { LieuApropos } from './pages/lieu/LieuApropos.tsx'
 import { LieuAgenda } from './pages/lieu/LieuAgenda.tsx'
 import { LieuEspaces } from './pages/lieu/LieuEspaces.tsx'
 import { LieuSoutenir } from './pages/lieu/LieuSoutenir.tsx'
+import { NotFound } from './pages/NotFound.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -37,8 +40,8 @@ createRoot(document.getElementById('root')!).render(
         <Route path="/:lieuSlug/agenda" element={<LieuAgenda />} />
         <Route path="/:lieuSlug/espaces" element={<LieuEspaces />} />
         <Route path="/:lieuSlug/soutenir" element={<LieuSoutenir />} />
-        {/* Toute route inconnue retombe sur l'accueil (SPA). */}
-        <Route path="*" element={<App />} />
+        {/* Toute route inconnue → page 404 sobre (liens routeur réels). */}
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>,

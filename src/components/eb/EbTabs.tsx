@@ -1,8 +1,9 @@
 export type TabId = "tous" | "pourVous" | "aujourdhui" | "weekend";
 
+// Onglet « Pour vous » retiré du rendu : aucun filtre côté client ne l'implémente
+// (il se comportait comme « Tout »). Le type TabId le garde pour un usage futur.
 const TABS: { id: TabId; label: string }[] = [
   { id: "tous",      label: "Tout" },
-  { id: "pourVous",  label: "Pour vous" },
   { id: "aujourdhui", label: "Aujourd'hui" },
   { id: "weekend",   label: "Ce week-end" },
 ];
