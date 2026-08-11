@@ -64,10 +64,14 @@ export function Accueil() {
         {/* ── Phrase de liaison Casaminga ─────────────────────── */}
         <section style={{ background: "var(--peach-pale)", borderTop: "1px solid var(--peach)", borderBottom: "1px solid var(--peach)" }}>
           <div className="wrap" style={{ padding: "clamp(36px,5vw,56px) 28px", textAlign: "center" }}>
-            <p style={{ fontSize: "clamp(18px,2.2vw,24px)", lineHeight: 1.5, maxWidth: "62ch", margin: "0 auto", color: "var(--black-soft)" }}>
-              <strong>Casaminga</strong> est le site de La Manufacture des Pays : il rend publique et
-              actionnable la vie du réseau de lieux animés par l'association — agenda, ateliers, rencontres et
-              chantiers participatifs ouverts à toutes et tous.
+            {/* Libellé exact imposé par la directive [A3.b] : ne pas reformuler,
+                ni le découper en plusieurs éléments (une seule chaîne de texte). */}
+            <p style={{ fontSize: "clamp(18px,2.2vw,24px)", lineHeight: 1.5, maxWidth: "62ch", margin: "0 auto", color: "var(--black-soft)", fontWeight: 500 }}>
+              Casaminga est la plateforme de La Manufacture des Pays, association loi 1901 qui réunit des bénévoles autour du faire, du lien social et de la transmission.
+            </p>
+            <p style={{ fontSize: "clamp(15px,1.7vw,18px)", lineHeight: 1.6, maxWidth: "60ch", margin: "16px auto 0", color: "var(--gray)" }}>
+              Le site rend publique et actionnable la vie du réseau de lieux animés par l'association :
+              agenda, ateliers, rencontres et chantiers participatifs ouverts à toutes et tous.
             </p>
             <p style={{ fontSize: "clamp(15px,1.7vw,18px)", lineHeight: 1.6, maxWidth: "60ch", margin: "16px auto 0", color: "var(--gray)" }}>
               Dans le prolongement de notre mission d'entraide, Casaminga a vocation à devenir une
