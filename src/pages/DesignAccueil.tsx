@@ -13,6 +13,14 @@ import { EbEventGrid } from "../components/eb/EbEventGrid";
 import { EbMap } from "../components/eb/EbMap";
 import { EbLieuxTiles } from "../components/eb/EbLieuxTiles";
 
+/**
+ * MAQUETTE HORS ROUTING — la route /design-accueil a été retirée de main.tsx :
+ * son contenu (découverte d'événements + lieux + carte) est désormais servi par
+ * src/pages/AccueilPortail.tsx sur « / ». Ce fichier est conservé comme
+ * référence de composition ; il n'est importé par aucun module rendu.
+ * Ses liens internes vers /design-accueil ne sont donc jamais servis — les
+ * réactiver imposerait de recréer la route.
+ */
 function extractCity(address: string | null): string | null {
   if (!address) return null;
   const match = address.match(/\d{5}\s+([A-Za-zÀ-ÿ][A-Za-zÀ-ÿ\s-]+)$/);
