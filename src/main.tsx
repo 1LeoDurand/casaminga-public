@@ -15,6 +15,7 @@ import { AccueilPortail } from './pages/AccueilPortail.tsx'
 import { Association } from './pages/Association.tsx'
 import { NosActions } from './pages/NosActions.tsx'
 import { Agenda } from './pages/Agenda.tsx'
+import { Lieux } from './pages/Lieux.tsx'
 import { Contact } from './pages/Contact.tsx'
 import { EventDetail } from './pages/EventDetail.tsx'
 import { LieuHome } from './pages/lieu/LieuHome.tsx'
@@ -35,6 +36,8 @@ createRoot(document.getElementById('root')!).render(
         <Route path="/association" element={<Association />} />
         <Route path="/nos-actions" element={<NosActions />} />
         <Route path="/agenda" element={<Agenda />} />
+        {/* Annuaire des lieux du réseau (route fixe, avant :lieuSlug). */}
+        <Route path="/lieux" element={<Lieux />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/evenement/:id" element={<EventDetail />} />
         {/* Vitrine d'un lieu : casaminga.com/<slug> (belle URL). Les segments
