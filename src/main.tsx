@@ -2,6 +2,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import './index.css'
+import { RouteTracker } from './lib/analytics.tsx'
 // NOTE : App.tsx (ancienne landing « découverte ») reste dans le repo mais n'est
 // plus rendue — elle contenait des contrôles non câblés (recherche désactivée,
 // onglet « Pour toi », destinations inertes) incompatibles avec la revue Ad Grant.
@@ -28,6 +29,8 @@ import { NotFound } from './pages/NotFound.tsx'
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
+      {/* Mesure GA4 : émet un page_view à chaque changement de route (SPA). */}
+      <RouteTracker />
       <Routes>
         {/* Accueil PORTAIL : découverte des événements et des lieux du réseau,
             avec mention visible de l'association éditrice (conformité Ad Grant). */}
