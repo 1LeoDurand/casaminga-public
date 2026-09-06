@@ -10,6 +10,7 @@ import type { PublicEvent, PublicOrg, PublicEstablishment } from "../lib/supabas
 import { isToday, isThisWeekend } from "../lib/event-meta";
 import { SiteHeader, HELLOASSO_ADHESION } from "../components/SiteHeader";
 import { SiteFooter } from "../components/SiteFooter";
+import { HeroBanner } from "../components/HeroBanner";
 import { EbCategoryIcons } from "../components/eb/EbCategoryIcons";
 import { EbTabs } from "../components/eb/EbTabs";
 import type { TabId } from "../components/eb/EbTabs";
@@ -151,6 +152,9 @@ export function AccueilPortail() {
       <SiteHeader />
 
       <main>
+        {/* ── (a0) Bannière vidéo ─────────────────────────────── */}
+        <HeroBanner />
+
         {/* ── (a) Hero découverte ─────────────────────────────── */}
         <section
           style={{
@@ -160,9 +164,10 @@ export function AccueilPortail() {
         >
           <div className="wrap" style={{ padding: "clamp(40px,6vw,72px) 28px" }}>
             <span className="eyebrow">L'agenda des lieux du réseau</span>
-            <h1 style={{ maxWidth: "18ch" }}>
+            {/* h2 : le h1 de la page est porté par la bannière ci-dessus. */}
+            <h2 style={{ maxWidth: "18ch", fontSize: "clamp(30px,4.4vw,46px)", lineHeight: 1.08 }}>
               Découvrez et faites vivre les lieux près de chez vous
-            </h1>
+            </h2>
             <p className="lead" style={{ marginTop: "20px" }}>
               Ateliers de la main, concerts, chantiers participatifs, expositions, rencontres :
               retrouvez ici tous les rendez-vous ouverts des tiers-lieux animés par le réseau
