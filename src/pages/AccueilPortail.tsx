@@ -142,6 +142,17 @@ export function AccueilPortail() {
     lieuFilter !== null;
 
   /** Aucun événement publié du tout (ou base injoignable) → pas de UI de filtres. */
+  /**
+   * Nombre d'événements par type, calculé sur TOUS les événements à venir et
+   * non sur la liste filtrée : sinon, choisir une catégorie ferait disparaître
+   * toutes les autres pastilles.
+   */
+  const typeCounts = useMemo(() => {
+    const m: Record<string, number> = {};
+    for (const e of events) m[e.type] = (m[e.type] ?? 0) + 1;
+    return m;
+  }, [events]);
+
   const noEventsAtAll = !loading && events.length === 0;
   const locatedCount = establishments.filter(
     (e) => e.latitude != null && e.longitude != null
@@ -237,7 +248,11 @@ export function AccueilPortail() {
 
         {/* ── (b) Découverte d'événements ─────────────────────── */}
         {!noEventsAtAll && (
-          <EbCategoryIcons activeCategory={category} onCategoryChange={setCategory} />
+          <EbCategoryIcons
+            activeCategory={category}
+            onCategoryChange={setCategory}
+            counts={typeCounts}
+          />
         )}
 
         <section id="evenements" className="wrap" style={{ padding: "clamp(32px,5vw,48px) 28px" }}>

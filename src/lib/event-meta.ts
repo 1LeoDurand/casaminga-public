@@ -3,22 +3,49 @@
 
 export const TYPE_LABELS: Record<string, string> = {
   atelier: "Atelier",
+  chantier: "Chantier participatif",
+  "repair-cafe": "Repair café",
+  jardin: "Jardin & permaculture",
+  marche: "Marché & troc",
   concert: "Concert",
-  exposition: "Exposition",
-  conference: "Conférence",
   spectacle: "Spectacle",
-  marche: "Marché",
+  exposition: "Exposition",
+  rencontre: "Rencontre & débat",
+  // Types encore portés par des événements existants : conservés pour que ces
+  // fiches gardent leur libellé, même s'ils ne sont plus proposés en filtre.
+  conference: "Conférence",
   formation: "Formation",
   autre: "Événement",
 };
 
+/**
+ * Catégories proposées comme filtres, dans l'ordre d'affichage.
+ * Volontairement plus court que TYPE_LABELS : un libellé sert à décrire une
+ * fiche, un filtre sert à naviguer — les deux listes n'ont pas à coïncider.
+ */
+export const FILTER_CATEGORIES = [
+  "atelier",
+  "chantier",
+  "repair-cafe",
+  "jardin",
+  "marche",
+  "concert",
+  "spectacle",
+  "exposition",
+  "rencontre",
+] as const;
+
 export const TYPE_GLYPHS: Record<string, string> = {
   atelier: "🛠️",
-  concert: "🎵",
-  exposition: "🖼️",
-  conference: "🎤",
-  spectacle: "🎭",
+  chantier: "🚧",
+  "repair-cafe": "🔧",
+  jardin: "🌱",
   marche: "🧺",
+  concert: "🎵",
+  spectacle: "🎭",
+  exposition: "🖼️",
+  rencontre: "💬",
+  conference: "🎤",
   formation: "📚",
   autre: "🎟️",
 };

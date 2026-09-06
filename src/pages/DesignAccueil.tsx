@@ -119,7 +119,11 @@ export function DesignAccueil() {
     <div style={{ background: "var(--cream)", minHeight: "100vh" }}>
       <EbHeader search={search} onSearch={setSearch} city={city} cities={cities} onCityChange={setCity} />
       <EbPromoBanner />
-      <EbCategoryIcons activeCategory={category} onCategoryChange={setCategory} />
+      <EbCategoryIcons
+        activeCategory={category}
+        onCategoryChange={setCategory}
+        counts={events.reduce<Record<string, number>>((m, e) => ({ ...m, [e.type]: (m[e.type] ?? 0) + 1 }), {})}
+      />
 
       <main id="evenements" className="wrap py-10">
         {/* Titre */}
