@@ -9,6 +9,7 @@ import { SiteHeader } from "../components/SiteHeader";
 import { SiteFooter } from "../components/SiteFooter";
 import { EventCard } from "../components/EventGrid";
 import { EbMap } from "../components/eb/EbMap";
+import { EventCover } from "../components/EventCover";
 import { resolveEventImage } from "../lib/event-images";
 import { TYPE_LABELS } from "../lib/event-meta";
 import {
@@ -236,24 +237,24 @@ export function EventDetail() {
       <SiteHeader />
       <main>
         {/* ── 1 · Visuel ──────────────────────────────────────────── */}
-        <div className="relative" style={{ background: gradientFromColor(color) }}>
-          <img
-            src={image}
-            alt=""
-            className="h-[clamp(190px,32vw,380px)] w-full object-cover"
-            style={{ opacity: 0.92 }}
-          />
+        {/* L'affiche entière, jamais rognée : en `cover`, un visuel portrait
+            perdait son titre et ses visages. Fond flouté tiré de l'image. */}
+        <EventCover
+          src={image}
+          className="h-[clamp(220px,34vw,420px)] w-full"
+          fallback={gradientFromColor(color)}
+        >
           <div
             aria-hidden="true"
             className="pointer-events-none absolute inset-0"
             style={{ background: "linear-gradient(0deg, rgba(0,0,0,.55) 0%, rgba(0,0,0,.12) 55%, rgba(0,0,0,0) 100%)" }}
           />
-          <div className="wrap absolute inset-x-0 bottom-0 pb-5">
+          <div className="wrap absolute inset-x-0 bottom-0 z-[2] pb-5">
             <Link to="/agenda" className="text-sm font-semibold text-white" style={{ opacity: 0.94 }}>
               ← Retour à l'agenda
             </Link>
           </div>
-        </div>
+        </EventCover>
 
         <div className="wrap grid gap-10 py-9 lg:grid-cols-[1.65fr_1fr]">
           {/* ── Colonne principale ───────────────────────────────── */}

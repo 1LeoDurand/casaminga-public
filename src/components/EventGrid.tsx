@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import type { PublicEvent, PublicOrg } from "../lib/supabase";
 import { resolveEventImage } from "../lib/event-images";
+import { EventCover } from "./EventCover";
 
 const TYPE_LABELS: Record<string, string> = {
   atelier: "Atelier", concert: "Concert", exposition: "Exposition",
@@ -53,30 +54,19 @@ export function EventCard({ event, org }: { event: PublicEvent; org?: PublicOrg 
         aria-label={event.title}
         className="absolute inset-0 z-[1]"
       />
-      {/* (1) Couverture photo.
-          Une image d'abord, toujours : la photo de l'événement si la base en
-          porte une, sinon une image de la catégorie. Le dégradé ne sert plus
-          que de fond au chargement, et de secours si l'image ne répond pas. */}
-      <div
-        className="relative h-36 w-full overflow-hidden sm:h-40"
-        style={{ background: gradientFromColor(color) }}
+      {/* (1) Visuel : affiche entière sur fond flouté (cf. EventCover). */}
+      <EventCover
+        src={resolveEventImage(event.type, event.title, event.photos)}
+        className="aspect-[4/3] w-full"
+        fallback={gradientFromColor(color)}
       >
-        <img
-          src={resolveEventImage(event.type, event.title, event.photos)}
-          alt=""
-          loading="lazy"
-          className="h-full w-full object-cover"
-          onError={(e) => { e.currentTarget.style.visibility = "hidden"; }}
-        />
-        {/* Pastille catégorie, posée sur la photo : voile sombre en dessous
-            pour rester lisible quelle que soit l'image. */}
         <span
-          className="absolute bottom-2 left-2 inline-flex items-center rounded-full px-2.5 py-1 text-[11px] font-bold"
+          className="absolute bottom-2 left-2 z-[2] inline-flex items-center rounded-full px-2.5 py-1 text-[11px] font-bold"
           style={{ background: "rgba(255,251,240,0.94)", color: "var(--coral-deep)" }}
         >
           {label}
         </span>
-      </div>
+      </EventCover>
 
       {/* (2) Corps */}
       <div className="flex flex-1 flex-col p-5">

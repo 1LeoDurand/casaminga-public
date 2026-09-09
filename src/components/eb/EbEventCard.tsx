@@ -1,6 +1,6 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import type { PublicEvent, PublicOrg } from "../../lib/supabase";
+import { EventCover } from "../EventCover";
 import { TYPE_LABELS, fmtPrice } from "../../lib/event-meta";
 import { resolveEventImage } from "../../lib/event-images";
 
@@ -10,14 +10,11 @@ interface EbEventCardProps {
 }
 
 export function EbEventCard({ event, org }: EbEventCardProps) {
-  const [imgError, setImgError] = useState(false);
-
   const orgName = org?.name ?? "Lieu du réseau";
   const price = fmtPrice(event.price);
   const label = TYPE_LABELS[event.type] ?? "Événement";
 
-  const resolvedImg = resolveEventImage(event.type, event.title, event.photos);
-  const imgSrc = imgError ? null : resolvedImg;
+  const imgSrc = resolveEventImage(event.type, event.title, event.photos);
 
   const start = new Date(event.start_at);
   const dateStr = start.toLocaleDateString("fr-FR", {
@@ -48,36 +45,22 @@ export function EbEventCard({ event, org }: EbEventCardProps) {
         className="absolute inset-0 z-[1]"
       />
 
-      {/* Image 16:9 */}
-      <div className="relative w-full overflow-hidden" style={{ aspectRatio: "16/9" }}>
-        {imgSrc ? (
-          <img
-            src={imgSrc}
-            alt=""
-            onError={() => setImgError(true)}
-            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-          />
-        ) : (
-          <div
-            className="h-full w-full"
-            style={{
-              background: `linear-gradient(135deg,
-                color-mix(in srgb, ${org?.primary_color ?? "#FF8A65"} 85%, #1a1a1a) 0%,
-                color-mix(in srgb, ${org?.primary_color ?? "#FF8A65"} 55%, #1a1a1a) 100%)`,
-            }}
-          />
-        )}
-
-        {/* Badge catégorie */}
+      {/* Visuel 16:9, affiche entière sur fond flouté (cf. EventCover). */}
+      <EventCover
+        src={imgSrc}
+        className="aspect-[4/3] w-full"
+        fallback={`linear-gradient(135deg,
+          color-mix(in srgb, ${org?.primary_color ?? "#FF8A65"} 85%, #1a1a1a) 0%,
+          color-mix(in srgb, ${org?.primary_color ?? "#FF8A65"} 55%, #1a1a1a) 100%)`}
+        hoverZoom
+      >
         <span
           className="absolute left-3 top-3 z-[2] rounded px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide"
           style={{ background: "rgba(0,0,0,0.48)", color: "#fff", backdropFilter: "blur(4px)" }}
         >
           {label}
         </span>
-
-        {/* Favoris : retiré du rendu (non câblé). À réintroduire avec la feature. */}
-      </div>
+      </EventCover>
 
       {/* Corps */}
       <div className="flex flex-1 flex-col px-4 py-3">
