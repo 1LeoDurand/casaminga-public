@@ -49,9 +49,21 @@ export function EventCover({
    * imparfait pendant un instant qu'un cadre vide.
    */
   const [box, setBox] = useState<ContentBox | null>(null);
+
+  /**
+   * Réalignement pendant le rendu, et non dans un effet : remettre l'état à
+   * zéro depuis un effet provoque un rendu en cascade, avec un instant où
+   * l'ancienne image reste affichée sous la nouvelle URL.
+   */
+  const [lastSrc, setLastSrc] = useState(src);
+  if (src !== lastSrc) {
+    setLastSrc(src);
+    setBox(null);
+    setFailed(false);
+  }
+
   useEffect(() => {
     let alive = true;
-    setBox(null);
     imageContentBox(src).then((b) => { if (alive) setBox(b); }).catch(() => {});
     return () => { alive = false; };
   }, [src]);
