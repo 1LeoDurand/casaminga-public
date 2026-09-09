@@ -11,9 +11,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Casa Minga : des lieux où l'on fait ensemble</title>
     <meta name="description" content="Casa Minga connecte les tiers-lieux culturels, associatifs et hybrides de France. Trouvez un lieu, rejoignez une association, participez à un événement." />
-    <meta property="og:title" content="Casa Minga" />
-    <meta property="og:description" content="Des lieux où l'on fait ensemble." />
+    <!-- Repli avant l'exécution de React : chaque route réécrit ensuite ces
+         balises via usePageMeta (src/lib/seo.ts). Gardées cohérentes avec le
+         titre et la description ci-dessus pour l'instant très court où elles
+         seules sont lues (partage sur un lien copié avant chargement, par ex). -->
+    <meta property="og:title" content="Casa Minga : des lieux où l'on fait ensemble" />
+    <meta property="og:description" content="Casa Minga connecte les tiers-lieux culturels, associatifs et hybrides de France. Trouvez un lieu, rejoignez une association, participez à un événement." />
     <meta property="og:url" content="https://casaminga.com" />
+    <meta property="og:type" content="website" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <!-- Poppins est la seule police du site (règle Léo, 2026-09-09) : aucune

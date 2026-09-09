@@ -13,6 +13,7 @@ import { EventCover } from "../components/EventCover";
 import { resolveEventImage } from "../lib/event-images";
 import { TYPE_LABELS } from "../lib/event-meta";
 import { isImportedOrg, participation, splitImportedNotice, visitorMailto } from "../lib/imported";
+import { usePageMeta, useJsonLd, truncateDescription } from "../lib/seo";
 import {
   fetchEventById, fetchDiscoveryEvents, fetchPublicEstablishments, fetchPublicOrgs,
   type EventDetailData, type PublicEvent, type PublicOrg, type PublicEstablishment,
@@ -139,6 +140,77 @@ export function EventDetail() {
     for (const o of orgs) m.set(o.id, o);
     return m;
   }, [orgs]);
+
+  /*
+   * ── SEO ────────────────────────────────────────────────────────────
+   * Calculé ici, avant les retours anticipés ci-dessous : les hooks
+   * doivent s'exécuter à chaque rendu, chargement ou fiche introuvable
+   * compris. Noms préfixés `meta` pour ne pas entrer en collision avec
+   * `event`/`org`, déclarés plus bas une fois `data` connu non nul.
+   */
+  const metaEvent = data?.event ?? null;
+  const metaOrg = data?.org ?? null;
+  const metaOrgName = metaOrg?.name ?? "Lieu du réseau";
+  // Uniquement une vraie photo d'événement en base : jamais l'illustration
+  // de catégorie de secours, qui ne représente pas l'événement lui-même.
+  const metaImage = metaEvent?.photos?.[0]?.startsWith("http") ? metaEvent.photos[0] : null;
+  const metaDescriptionSource = metaEvent
+    ? splitImportedNotice(metaEvent.description).body || metaEvent.description || ""
+    : "";
+  const notFound = !loading && !data;
+
+  usePageMeta(
+    metaEvent
+      ? {
+          title: `${metaEvent.title} · ${metaOrgName} | Casaminga`,
+          description: metaDescriptionSource
+            ? truncateDescription(metaDescriptionSource)
+            : `Rendez-vous organisé par ${metaOrgName}, dans le réseau Casaminga.`,
+          image: metaImage,
+          type: "article",
+        }
+      : notFound
+        ? {
+            title: "Événement introuvable | Casaminga",
+            description: "Cet événement n'existe pas ou n'est plus publié sur Casaminga.",
+            noindex: true,
+          }
+        : {
+            title: "Chargement de l'événement | Casaminga",
+            description: "Détail de l'événement en cours de chargement.",
+          }
+  );
+
+  const eventJsonLd = useMemo(() => {
+    if (!metaEvent) return null;
+    const jsonLd: Record<string, unknown> = {
+      "@context": "https://schema.org",
+      "@type": "Event",
+      name: metaEvent.title,
+      startDate: metaEvent.start_at,
+      endDate: metaEvent.end_at,
+      eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+    };
+    if (metaDescriptionSource) jsonLd.description = metaDescriptionSource;
+    if (metaImage) jsonLd.image = metaImage;
+    if (metaOrg) {
+      jsonLd.organizer = { "@type": "Organization", name: metaOrgName };
+      jsonLd.location = metaOrg.address
+        ? { "@type": "Place", name: metaOrgName, address: metaOrg.address }
+        : { "@type": "Place", name: metaOrgName };
+    }
+    if (metaEvent.price !== null) {
+      jsonLd.offers = {
+        "@type": "Offer",
+        price: metaEvent.price,
+        priceCurrency: "EUR",
+        availability: "https://schema.org/InStock",
+      };
+    }
+    return jsonLd;
+  }, [metaEvent, metaOrg, metaOrgName, metaDescriptionSource, metaImage]);
+
+  useJsonLd(eventJsonLd);
 
   if (loading) {
     return (

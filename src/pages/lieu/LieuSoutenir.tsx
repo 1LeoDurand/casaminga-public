@@ -1,7 +1,8 @@
 import { useParams } from "react-router-dom";
 import { ADMIN_BASE } from "../../lib/supabase";
-import { useLieu } from "./useLieu";
+import { useLieu, lieuMetaDescription } from "./useLieu";
 import { LieuShell, LieuLoading, LieuNotFound } from "./LieuShell";
+import { usePageMeta } from "../../lib/seo";
 
 function fmtEur(n: number): string {
   return Number.isInteger(n) ? `${n} €` : `${n.toFixed(2)} €`;
@@ -11,6 +12,16 @@ function fmtEur(n: number): string {
 export function LieuSoutenir() {
   const { lieuSlug } = useParams<{ lieuSlug: string }>();
   const { loading, data } = useLieu(lieuSlug);
+
+  usePageMeta({
+    title: data ? `Soutenir · ${data.title} | Casaminga` : "Chargement | Casaminga",
+    description: data
+      ? lieuMetaDescription(data)
+      : "Page de soutien d'un lieu du réseau Casaminga en cours de chargement.",
+    canonical: data ? `/${data.org.slug}/soutenir` : undefined,
+    image: data ? (data.content.hero_image_url ?? data.content.gallery_urls[0] ?? null) : null,
+    noindex: !loading && (!data || !data.content.pages.soutenir),
+  });
 
   if (loading) return <LieuLoading />;
   if (!data || !data.content.pages.soutenir) return <LieuNotFound />;

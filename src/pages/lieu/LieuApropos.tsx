@@ -1,11 +1,23 @@
 import { useParams, Link } from "react-router-dom";
-import { useLieu } from "./useLieu";
+import { useLieu, lieuMetaDescription } from "./useLieu";
 import { LieuShell, LieuLoading, LieuNotFound, LazyImg } from "./LieuShell";
+import { usePageMeta } from "../../lib/seo";
 
 /** Page « Le lieu » / histoire (pages.apropos). */
 export function LieuApropos() {
   const { lieuSlug } = useParams<{ lieuSlug: string }>();
   const { loading, data } = useLieu(lieuSlug);
+  usePageMeta({
+    title: data ? `Le lieu · ${data.title} | Casaminga` : "Chargement du lieu | Casaminga",
+    description: data
+      ? lieuMetaDescription(data)
+      : "Fiche d'un lieu du réseau Casaminga en cours de chargement.",
+    canonical: data ? `/${data.org.slug}/histoire` : undefined,
+    image: data ? (data.content.hero_image_url ?? data.content.gallery_urls[0] ?? null) : null,
+    // Page « histoire » désactivée par le lieu : la fiche ne restera pas
+    // affichée (LieuNotFound), inutile de la laisser indexable.
+    noindex: !loading && (!data || !data.content.pages.apropos),
+  });
 
   if (loading) return <LieuLoading />;
   if (!data || !data.content.pages.apropos) return <LieuNotFound />;

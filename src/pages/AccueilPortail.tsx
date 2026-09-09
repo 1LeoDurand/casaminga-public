@@ -18,6 +18,7 @@ import { EbFilterBar } from "../components/eb/EbFilterBar";
 import { EbEventGrid } from "../components/eb/EbEventGrid";
 import { EbLieuxTiles } from "../components/eb/EbLieuxTiles";
 import { EbMap } from "../components/eb/EbMap";
+import { usePageMeta, useJsonLd } from "../lib/seo";
 
 /**
  * Accueil PORTAIL (route `/`) : découverte des événements et des lieux du
@@ -32,6 +33,33 @@ import { EbMap } from "../components/eb/EbMap";
  * chaque contrôle est réellement câblé, aucun bouton inerte, aucun lien mort.
  */
 
+/**
+ * Organisation JSON-LD de l'éditrice du site (item 3 des instructions SEO).
+ * Constante au niveau du module : les coordonnées de l'association ne
+ * dépendent d'aucune donnée chargée, inutile de la recréer à chaque rendu.
+ */
+const ORGANIZATION_JSON_LD = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "La Manufacture des Pays",
+  url: "https://casaminga.com",
+  email: "manufacturedespays@gmail.com",
+  telephone: "+33611831112",
+  taxID: "824820856",
+  identifier: {
+    "@type": "PropertyValue",
+    propertyID: "RNA",
+    value: "W342002465",
+  },
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "Atelier Bernard Kohn, La Distillerie, 10 rue de la sous-préfecture",
+    postalCode: "34700",
+    addressLocality: "Lodève",
+    addressCountry: "FR",
+  },
+};
+
 /** Extrait une ville depuis une adresse postale libre (best effort). */
 function extractCity(address: string | null): string | null {
   if (!address) return null;
@@ -43,6 +71,14 @@ function extractCity(address: string | null): string | null {
 }
 
 export function AccueilPortail() {
+  usePageMeta({
+    title: "Casaminga : l'agenda des tiers-lieux et associations",
+    description:
+      "Ateliers, concerts, chantiers participatifs et rencontres : découvrez les événements et les lieux animés par La Manufacture des Pays, partout en France.",
+    canonical: "/",
+  });
+  useJsonLd(ORGANIZATION_JSON_LD);
+
   const [events, setEvents] = useState<PublicEvent[]>([]);
   const [orgs, setOrgs] = useState<PublicOrg[]>([]);
   const [establishments, setEstablishments] = useState<PublicEstablishment[]>([]);

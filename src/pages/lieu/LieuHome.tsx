@@ -1,8 +1,9 @@
 import { useParams, Link } from "react-router-dom";
 import { ADMIN_BASE } from "../../lib/supabase";
-import { useLieu } from "./useLieu";
+import { useLieu, lieuMetaDescription } from "./useLieu";
 import { LieuShell, LieuLoading, LieuNotFound, LazyImg } from "./LieuShell";
 import { EventCard } from "./lieuUi";
+import { usePageMeta } from "../../lib/seo";
 
 function fmtEur(n: number): string {
   return Number.isInteger(n) ? `${n} €` : `${n.toFixed(2)} €`;
@@ -11,6 +12,17 @@ function fmtEur(n: number): string {
 export function LieuHome() {
   const { lieuSlug } = useParams<{ lieuSlug: string }>();
   const { loading, data } = useLieu(lieuSlug);
+
+  // Hook posé avant les retours anticipés : `data` reste optionnel tant que
+  // le chargement n'a pas abouti.
+  usePageMeta({
+    title: data ? `${data.title} | Casaminga` : "Chargement du lieu | Casaminga",
+    description: data
+      ? lieuMetaDescription(data)
+      : "Fiche d'un lieu du réseau Casaminga en cours de chargement.",
+    canonical: data ? `/${data.org.slug}` : undefined,
+    image: data?.content.hero_image_url ?? data?.content.gallery_urls[0] ?? null,
+  });
 
   if (loading) return <LieuLoading />;
   if (!data) return <LieuNotFound />;

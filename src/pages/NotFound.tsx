@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { SiteHeader } from "../components/SiteHeader";
 import { SiteFooter } from "../components/SiteFooter";
+import { usePageMeta } from "../lib/seo";
 
 /**
  * Page 404 (fallback router "*").
@@ -9,6 +10,13 @@ import { SiteFooter } from "../components/SiteFooter";
  * never surface unwired sections to the Google Ad Grant review.
  */
 export function NotFound() {
+  usePageMeta({
+    title: "Page introuvable | Casaminga",
+    description:
+      "Cette page n'existe pas ou a changé d'adresse. Retrouvez l'accueil, l'agenda du réseau ou la page de contact de Casaminga.",
+    noindex: true,
+  });
+
   return (
     <div style={{ background: "var(--cream)", minHeight: "100vh" }}>
       <SiteHeader />

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Sitemap statique : seules les routes fixes du portail, qui existent
+  indépendamment du contenu chargé depuis Supabase.
+
+  Volontairement absents :
+  - les fiches événement (/evenement/:id) : une par événement en base, leur
+    nombre et leur liste changent en continu, un sitemap statique serait
+    obsolète dès le prochain événement publié ou terminé ;
+  - les vitrines de lieu (/:lieuSlug et ses sous-pages) : mêmes raisons,
+    elles n'existent que si le lieu a publié son site (public_sites.status
+    = 'publie'), ce fichier ne peut pas le savoir sans interroger la base.
+
+  Le jour où ces pages ont besoin d'un sitemap, il faudra le générer au
+  build ou le servir dynamiquement depuis Supabase, pas l'écrire à la main
+  ici.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://casaminga.com/</loc>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://casaminga.com/association</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://casaminga.com/nos-actions</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://casaminga.com/agenda</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://casaminga.com/lieux</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://casaminga.com/contact</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+</urlset>

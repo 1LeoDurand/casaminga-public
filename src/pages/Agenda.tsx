@@ -5,6 +5,7 @@ import { SiteFooter } from "../components/SiteFooter";
 import { fetchDiscoveryEvents, fetchPublicOrgs, type PublicEvent, type PublicOrg } from "../lib/supabase";
 import { EventCard } from "../components/EventGrid";
 import { isToday, isThisWeekend, TYPE_LABELS } from "../lib/event-meta";
+import { usePageMeta } from "../lib/seo";
 
 /**
  * Page « Agenda » (item A5 des DIRECTIVES-AD-GRANT.md).
@@ -22,6 +23,13 @@ const TABS: { id: Tab; label: string }[] = [
 ];
 
 export function Agenda() {
+  usePageMeta({
+    title: "Agenda : les rendez-vous des tiers-lieux Casaminga",
+    description:
+      "Ateliers, concerts, expositions et chantiers participatifs des lieux animés par La Manufacture des Pays : filtrez par date et catégorie pour trouver le vôtre.",
+    canonical: "/agenda",
+  });
+
   const [events, setEvents] = useState<PublicEvent[]>([]);
   const [orgs, setOrgs] = useState<PublicOrg[]>([]);
   const [loading, setLoading] = useState(true);

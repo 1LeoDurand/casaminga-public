@@ -4,6 +4,7 @@ import { SiteHeader } from "../components/SiteHeader";
 import { SiteFooter } from "../components/SiteFooter";
 import { fetchUpcomingEvents, fetchPublicOrgs, type PublicEvent, type PublicOrg } from "../lib/supabase";
 import { fmtDate, fmtPrice } from "../lib/event-meta";
+import { usePageMeta } from "../lib/seo";
 
 /**
  * Page « Nos actions » (item A4 des DIRECTIVES-AD-GRANT.md).
@@ -40,6 +41,13 @@ const THEMES = [
 ];
 
 export function NosActions() {
+  usePageMeta({
+    title: "Nos actions : ateliers, chantiers, transmission | Casaminga",
+    description:
+      "Ateliers de la main, ateliers de ville, pédagogie et réemploi : voici les actions de terrain de La Manufacture des Pays, l'association qui anime Casaminga.",
+    canonical: "/nos-actions",
+  });
+
   const [events, setEvents] = useState<PublicEvent[]>([]);
   const [orgs, setOrgs] = useState<PublicOrg[]>([]);
 

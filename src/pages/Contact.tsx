@@ -1,5 +1,6 @@
 import { SiteHeader, HELLOASSO_ADHESION } from "../components/SiteHeader";
 import { SiteFooter } from "../components/SiteFooter";
+import { usePageMeta } from "../lib/seo";
 
 /**
  * Page « Contact » + identité légale (item A2 des DIRECTIVES-AD-GRANT.md).
@@ -7,6 +8,13 @@ import { SiteFooter } from "../components/SiteFooter";
  * email, loi 1901, RNA/SIREN). Aucun champ non câblé, contact par email direct.
  */
 export function Contact() {
+  usePageMeta({
+    title: "Contact : écrire à La Manufacture des Pays | Casaminga",
+    description:
+      "Adresse, email et téléphone de La Manufacture des Pays, association loi 1901 éditrice de Casaminga. Écrivez-nous pour une question ou pour rejoindre le réseau.",
+    canonical: "/contact",
+  });
+
   return (
     <div style={{ background: "var(--cream)", minHeight: "100vh" }}>
       <SiteHeader />

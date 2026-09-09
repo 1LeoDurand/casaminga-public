@@ -1,7 +1,8 @@
 import { useParams } from "react-router-dom";
 import { ADMIN_BASE, type LieuSpace } from "../../lib/supabase";
-import { useLieu } from "./useLieu";
+import { useLieu, lieuMetaDescription } from "./useLieu";
 import { LieuShell, LieuLoading, LieuNotFound, LazyImg } from "./LieuShell";
+import { usePageMeta } from "../../lib/seo";
 
 function tarif(s: LieuSpace): string | null {
   const parts: string[] = [];
@@ -15,6 +16,16 @@ function tarif(s: LieuSpace): string | null {
 export function LieuEspaces() {
   const { lieuSlug } = useParams<{ lieuSlug: string }>();
   const { loading, data } = useLieu(lieuSlug);
+
+  usePageMeta({
+    title: data ? `Espaces · ${data.title} | Casaminga` : "Chargement des espaces | Casaminga",
+    description: data
+      ? lieuMetaDescription(data)
+      : "Espaces réservables d'un lieu du réseau Casaminga en cours de chargement.",
+    canonical: data ? `/${data.org.slug}/espaces` : undefined,
+    image: data ? (data.content.hero_image_url ?? data.content.gallery_urls[0] ?? null) : null,
+    noindex: !loading && (!data || !data.content.pages.espaces),
+  });
 
   if (loading) return <LieuLoading />;
   if (!data || !data.content.pages.espaces) return <LieuNotFound />;

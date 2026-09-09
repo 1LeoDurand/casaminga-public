@@ -1,14 +1,25 @@
 import { useParams } from "react-router-dom";
 import { ADMIN_BASE } from "../../lib/supabase";
-import { useLieu } from "./useLieu";
+import { useLieu, lieuMetaDescription } from "./useLieu";
 import { LieuShell, LieuLoading, LieuNotFound } from "./LieuShell";
 import { EventCard, monthLabel } from "./lieuUi";
 import type { PublicEvent } from "../../lib/supabase";
+import { usePageMeta } from "../../lib/seo";
 
 /** Agenda complet, groupé par mois (pages.agenda). */
 export function LieuAgenda() {
   const { lieuSlug } = useParams<{ lieuSlug: string }>();
   const { loading, data } = useLieu(lieuSlug);
+
+  usePageMeta({
+    title: data ? `Agenda · ${data.title} | Casaminga` : "Chargement de l'agenda | Casaminga",
+    description: data
+      ? lieuMetaDescription(data)
+      : "Agenda d'un lieu du réseau Casaminga en cours de chargement.",
+    canonical: data ? `/${data.org.slug}/agenda` : undefined,
+    image: data ? (data.content.hero_image_url ?? data.content.gallery_urls[0] ?? null) : null,
+    noindex: !loading && (!data || !data.content.pages.agenda),
+  });
 
   if (loading) return <LieuLoading />;
   if (!data || !data.content.pages.agenda) return <LieuNotFound />;

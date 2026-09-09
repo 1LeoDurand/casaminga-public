@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { SiteHeader, HELLOASSO_ADHESION } from "../components/SiteHeader";
 import { SiteFooter } from "../components/SiteFooter";
+import { usePageMeta } from "../lib/seo";
 
 /**
  * Page « L'association » (item A1 des DIRECTIVES-AD-GRANT.md).
@@ -9,6 +10,13 @@ import { SiteFooter } from "../components/SiteFooter";
  * Contenu repris de SOURCE-MANUFACTURE-DES-PAYS.md (verbatim).
  */
 export function Association() {
+  usePageMeta({
+    title: "La Manufacture des Pays, l'association derrière Casaminga",
+    description:
+      "Association loi 1901 née de quatorze ans d'expérience, La Manufacture des Pays anime Casaminga entre Lodève et Saint-Mandé : découvrez son histoire.",
+    canonical: "/association",
+  });
+
   return (
     <div style={{ background: "var(--cream)", minHeight: "100vh" }}>
       <SiteHeader />
