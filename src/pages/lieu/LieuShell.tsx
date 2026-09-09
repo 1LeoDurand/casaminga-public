@@ -1,4 +1,5 @@
 import { useState, type ReactNode, type ImgHTMLAttributes } from "react";
+import { usePageMeta } from "../../lib/seo";
 import { Link, NavLink } from "react-router-dom";
 import type { LieuData } from "../../lib/supabase";
 import { lieuImage } from "../../lib/img";
@@ -21,6 +22,18 @@ export function LieuLoading() {
 
 /** Lieu introuvable / non publié. */
 export function LieuNotFound() {
+  /**
+   * Cette page répond à toute adresse `/<slug>` sans vitrine publiée, dont les
+   * 118 lieux moissonnés. Sans métadonnées propres, elle héritait du titre de
+   * l'état de chargement, et autant d'URL risquaient d'entrer dans l'index de
+   * Google sous « Chargement du lieu ». D'où le `noindex`.
+   */
+  usePageMeta({
+    title: "Lieu introuvable | Casaminga",
+    description: "Ce lieu n'a pas de page sur Casaminga, ou son site n'est pas encore publié.",
+    noindex: true,
+  });
+
   return (
     <div className="flex min-h-screen items-center justify-center px-6 text-center" style={CREAM_BG}>
       <div className="flex flex-col items-center gap-4">

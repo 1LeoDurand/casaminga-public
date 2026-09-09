@@ -37,7 +37,10 @@ export function Agenda() {
   const [cat, setCat] = useState<string | null>(null);
 
   useEffect(() => {
-    Promise.all([fetchDiscoveryEvents(100), fetchPublicOrgs()])
+    // 400 et non 100 : l'import montpellierain a porte l'agenda a 275 fiches, et
+    // le plafond precedent en masquait silencieusement les deux tiers. Le tri et
+    // les filtres sont faits cote client, une coupe a la lecture serait invisible.
+    Promise.all([fetchDiscoveryEvents(400), fetchPublicOrgs()])
       .then(([e, o]) => { setEvents(e); setOrgs(o); })
       .catch(() => {})
       .finally(() => setLoading(false));
