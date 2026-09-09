@@ -23,7 +23,13 @@ export function Contact() {
         </section>
 
         <section className="wrap" style={{ paddingBottom: "clamp(48px,7vw,80px)" }}>
-          <div className="grid items-start gap-8 md:grid-cols-2">
+          {/*
+            `min-w-0` : sans lui, l'adresse email et le numéro de TVA, qui ne
+            comportent aucune césure possible, imposaient leur largeur à toute
+            la grille et la page défilait latéralement sous 375 px.
+            `break-words` autorise le repli à l'intérieur de ces chaînes.
+          */}
+          <div className="grid items-start gap-8 [&>*]:min-w-0 [&_a]:break-words md:grid-cols-2">
             {/* Coordonnées */}
             <div className="card" style={{ padding: "30px" }}>
               <h2 style={{ fontSize: "22px" }}>Coordonnées</h2>

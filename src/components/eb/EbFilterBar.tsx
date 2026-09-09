@@ -39,7 +39,7 @@ export function EbFilterBar({
             key={p}
             type="button"
             onClick={() => onPriceChange(p)}
-            className="px-3 py-1.5 text-xs font-medium transition-colors"
+            className="px-3 py-2.5 text-xs font-medium transition-colors"
             style={{
               background: priceFilter === p ? "var(--black)" : "#fff",
               color: priceFilter === p ? "#fff" : "var(--gray)",
@@ -51,12 +51,21 @@ export function EbFilterBar({
         ))}
       </div>
 
-      {/* Filtre lieu */}
-      <div className="relative">
+      {/*
+        Filtre lieu.
+
+        Un `select` se dimensionne sur son option la plus longue, et un élément
+        de boîte flexible refuse par défaut de descendre sous cette largeur.
+        « Réseau des médiathèques de Montpellier Méditerranée Métropole » suffit
+        donc à élargir la page à 446 px, et l'accueil défilait latéralement sur
+        tout téléphone. D'où le `min-w-0` qui autorise la compression et le
+        `max-w-full` qui borne le menu à la place réellement disponible.
+      */}
+      <div className="relative min-w-0 max-w-full">
         <select
           value={lieuFilter ?? ""}
           onChange={(e) => onLieuChange(e.target.value || null)}
-          className="appearance-none rounded-lg border py-1.5 pl-3 pr-8 text-xs font-medium"
+          className="w-full max-w-full appearance-none truncate rounded-lg border py-2.5 pl-3 pr-8 text-xs font-medium"
           style={{
             borderColor: lieuFilter ? "var(--coral)" : "var(--gray-mid)",
             color: lieuFilter ? "var(--coral-deep)" : "var(--gray)",
@@ -75,12 +84,12 @@ export function EbFilterBar({
         />
       </div>
 
-      {/* Filtre catégorie */}
-      <div className="relative">
+      {/* Filtre catégorie, même contrainte de largeur que le filtre lieu. */}
+      <div className="relative min-w-0 max-w-full">
         <select
           value={category ?? ""}
           onChange={(e) => onCategoryChange(e.target.value || null)}
-          className="appearance-none rounded-lg border py-1.5 pl-3 pr-8 text-xs font-medium"
+          className="w-full max-w-full appearance-none truncate rounded-lg border py-2.5 pl-3 pr-8 text-xs font-medium"
           style={{
             borderColor: category ? "var(--coral)" : "var(--gray-mid)",
             color: category ? "var(--coral-deep)" : "var(--gray)",

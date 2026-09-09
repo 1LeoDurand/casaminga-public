@@ -60,8 +60,15 @@ const OPENED = [
  * l'audit signale un accident, pas un choix.
  */
 const MIN_FONT_PX = 10;
-/** Côté minimal d'une cible tactile, pour les commandes (pas les liens en prose). */
-const MIN_TAP_PX = 40;
+/**
+ * Côté minimal d'une cible tactile, pour les commandes.
+ *
+ * 40 px était un chiffre inventé, et il condamnait des commandes de 36 px qui
+ * n'ont rien de fautif. La référence est WCAG 2.2 AA, « Target Size (Minimum) »,
+ * qui demande 24 px ; on garde 32 px comme marge de confort. En dessous, c'est
+ * un accident, pas un parti pris.
+ */
+const MIN_TAP_PX = 32;
 
 /**
  * Contrôles exécutés dans la page. Tout est mesuré sur le rendu réel : c'est le

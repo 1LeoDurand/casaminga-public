@@ -282,9 +282,16 @@ export function EventDetail() {
           </div>
         </EventCover>
 
+        {/*
+          `min-w-0` sur les deux colonnes : un enfant de grille refuse par
+          défaut de descendre sous la largeur de son contenu, si bien qu'un mot
+          insécable élargit toute la page au lieu de se replier. Ici l'adresse
+          d'inscription du lieu, longue de 38 caractères, portait la fiche à
+          639 px sur un écran de 320.
+        */}
         <div className="wrap grid gap-10 py-9 lg:grid-cols-[1.65fr_1fr]">
           {/* ── Colonne principale ───────────────────────────────── */}
-          <div className="flex flex-col gap-9">
+          <div className="flex min-w-0 flex-col gap-9">
             <div>
               {/* 2 · Titre, et la catégorie qui le situe */}
               <span
@@ -482,7 +489,7 @@ export function EventDetail() {
           </div>
 
           {/* ── 5 · Panneau « Participer », collant ────────────────── */}
-          <aside>
+          <aside className="min-w-0">
             <div className="card p-5" style={{ position: "sticky", top: "88px" }}>
               <div className="text-[11px] font-bold uppercase tracking-wider" style={{ color: "var(--gray)" }}>
                 Participer
