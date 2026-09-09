@@ -12,7 +12,7 @@ import { EbMap } from "../components/eb/EbMap";
 import { EventCover } from "../components/EventCover";
 import { resolveEventImage } from "../lib/event-images";
 import { TYPE_LABELS } from "../lib/event-meta";
-import { isImportedOrg, splitImportedNotice } from "../lib/imported";
+import { isImportedOrg, participation, splitImportedNotice, visitorMailto } from "../lib/imported";
 import {
   fetchEventById, fetchDiscoveryEvents, fetchPublicEstablishments, fetchPublicOrgs,
   type EventDetailData, type PublicEvent, type PublicOrg, type PublicEstablishment,
@@ -161,7 +161,7 @@ export function EventDetail() {
     );
   }
 
-  const { event, org, siblings } = data;
+  const { event, org, siblings, provenance } = data;
   const color = org?.primary_color ?? "#FF8A65";
   const orgName = org?.name ?? "Lieu du réseau";
   const label = TYPE_LABELS[event.type] ?? "Événement";
@@ -180,7 +180,12 @@ export function EventDetail() {
    * place, et on ouvre au lieu la possibilité de récupérer sa page.
    */
   const imported = isImportedOrg(org);
-  const { body: descriptionBody, sourceUrl } = splitImportedNotice(event.description);
+  const { body: descriptionBody, sourceUrl: noticeUrl } = splitImportedNotice(event.description);
+  /** La table de provenance fait foi ; la description n'est qu'un vestige de l'import. */
+  const sourceUrl = provenance?.source_url ?? noticeUrl;
+
+  /** Ce que le visiteur doit faire pour venir, d'après l'organisateur lui-même. */
+  const plan = participation(provenance, org);
 
   /**
    * Revendication : un simple `mailto`, comme la page Contact du site. Le lieu
@@ -498,31 +503,108 @@ export function EventDetail() {
               </div>
 
               {/*
-                L'inscription en ligne n'existe pas encore sur Casaminga : le
-                canal réel est le formulaire de contact du lieu. On l'annonce
-                tel quel, plutôt qu'un bouton « Réserver » qui ne réserve rien.
-              */}
-              {contactUrl ? (
-                <a href={contactUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary mt-4 w-full justify-center">
-                  <Ticket size={16} aria-hidden="true" /> Demander une place
-                </a>
-              ) : (
-                <Link to="/contact" className="btn btn-primary mt-4 w-full justify-center">
-                  Nous écrire
-                </Link>
-              )}
-              <p className="mt-2 text-xs" style={{ color: "var(--gray)" }}>
-                La demande part directement au lieu organisateur, qui vous répond.
-              </p>
+                Deux panneaux, et la différence est volontaire.
 
-              <div className="mt-4 flex flex-col gap-2">
-                <button type="button" onClick={downloadIcs} className="btn btn-secondary btn-sm w-full justify-center">
-                  <CalendarDays size={15} aria-hidden="true" /> Ajouter à mon agenda
-                </button>
-                <button type="button" onClick={share} className="btn btn-ghost btn-sm w-full justify-center">
-                  <Share2 size={15} aria-hidden="true" /> {copied ? "Lien copié" : "Partager"}
-                </button>
-              </div>
+                Fiche revendiquée : le lieu tient sa page et lit ses demandes,
+                donc Casaminga peut promettre une place et porter le bouton
+                principal.
+
+                Fiche importée : Casaminga n'a rien à tenir. Le bouton principal
+                revient à ce que la page fait vraiment, ajouter à l'agenda, et
+                l'inscription est présentée comme une information, avec le canal
+                que l'organisateur a lui-même déclaré. L'adresse est écrite en
+                clair, pas seulement derrière un lien : un visiteur sans client
+                mail configuré doit pouvoir la copier.
+              */}
+              {imported ? (
+                <>
+                  {plan.conditions && (
+                    <p className="mt-3 text-sm" style={{ color: "var(--black-soft)", whiteSpace: "pre-line" }}>
+                      {plan.conditions}
+                    </p>
+                  )}
+
+                  {plan.needsAction && plan.channels.length > 0 && (
+                    <div className="mt-4">
+                      <div className="text-[11px] font-bold uppercase tracking-wider" style={{ color: "var(--gray)" }}>
+                        Inscription auprès du lieu
+                      </div>
+                      <div className="mt-2 flex flex-col gap-2">
+                        {plan.channels.map((c) =>
+                          c.kind === "link" ? (
+                            <a
+                              key={c.value}
+                              href={c.href}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="btn btn-secondary btn-sm w-full justify-center"
+                            >
+                              {c.label}
+                            </a>
+                          ) : (
+                            <a
+                              key={c.value}
+                              href={
+                                c.kind === "email"
+                                  ? visitorMailto(c.value, event.title, fmtFullDate(event.start_at))
+                                  : c.href
+                              }
+                              className="text-sm font-semibold"
+                              style={{ wordBreak: "break-word" }}
+                            >
+                              {c.label}
+                            </a>
+                          )
+                        )}
+                      </div>
+                    </div>
+                  )}
+
+                  {plan.needsAction && plan.channels.length === 0 && sourceUrl && (
+                    <a
+                      href={sourceUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn btn-secondary btn-sm mt-4 w-full justify-center"
+                    >
+                      Modalités sur l'annonce d'origine
+                    </a>
+                  )}
+
+                  <div className="mt-5 flex flex-col gap-2">
+                    <button type="button" onClick={downloadIcs} className="btn btn-primary w-full justify-center">
+                      <CalendarDays size={15} aria-hidden="true" /> Ajouter à mon agenda
+                    </button>
+                    <button type="button" onClick={share} className="btn btn-ghost btn-sm w-full justify-center">
+                      <Share2 size={15} aria-hidden="true" /> {copied ? "Lien copié" : "Partager"}
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <>
+                  {contactUrl ? (
+                    <a href={contactUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary mt-4 w-full justify-center">
+                      <Ticket size={16} aria-hidden="true" /> Demander une place
+                    </a>
+                  ) : (
+                    <Link to="/contact" className="btn btn-primary mt-4 w-full justify-center">
+                      Nous écrire
+                    </Link>
+                  )}
+                  <p className="mt-2 text-xs" style={{ color: "var(--gray)" }}>
+                    La demande part directement au lieu organisateur, qui vous répond.
+                  </p>
+
+                  <div className="mt-4 flex flex-col gap-2">
+                    <button type="button" onClick={downloadIcs} className="btn btn-secondary btn-sm w-full justify-center">
+                      <CalendarDays size={15} aria-hidden="true" /> Ajouter à mon agenda
+                    </button>
+                    <button type="button" onClick={share} className="btn btn-ghost btn-sm w-full justify-center">
+                      <Share2 size={15} aria-hidden="true" /> {copied ? "Lien copié" : "Partager"}
+                    </button>
+                  </div>
+                </>
+              )}
             </div>
           </aside>
         </div>

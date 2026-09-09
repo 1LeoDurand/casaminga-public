@@ -16,6 +16,9 @@ export interface PublicOrg {
   address: string | null;
   primary_color: string;
   website: string | null;
+  /** Contact d'accueil publié par le lieu. Recours quand l'événement n'en donne pas. */
+  email?: string | null;
+  phone?: string | null;
 }
 
 export interface PublicEstablishment {
@@ -138,13 +141,33 @@ export async function fetchDiscoveryEvents(limit = 100): Promise<PublicEvent[]> 
 }
 
 
-const ORG_COLUMNS = "id, slug, name, description, structure, address, primary_color, website";
+const ORG_COLUMNS =
+  "id, slug, name, description, structure, address, primary_color, website, email, phone";
+
+/**
+ * Provenance et modalités d'un événement moissonné (table `evenements_import`).
+ *
+ * Ces champs ne décrivent pas l'événement mais la façon dont on l'a obtenu :
+ * d'où il vient, ce que l'organisateur a écrit sur l'accès, et par quel canal
+ * il demande qu'on s'inscrive. Absent pour un événement saisi dans l'admin.
+ */
+export interface EventImport {
+  event_id: string;
+  source: string;
+  source_url: string | null;
+  /** Conditions d'accès, mot pour mot (« entrée libre », « sur inscription »). */
+  conditions: string | null;
+  /** Canaux déclarés à la source, dans l'ordre où l'organisateur les a donnés. */
+  registration: { type: "email" | "link" | "phone"; value: string }[] | null;
+}
 
 export interface EventDetailData {
   event: PublicEvent;
   org: PublicOrg | null;
   /** Autres événements à venir du même lieu (bloc « Plus d'événements »). */
   siblings: PublicEvent[];
+  /** Renseigné uniquement si l'événement vient d'un import. */
+  provenance: EventImport | null;
 }
 
 /**
@@ -166,6 +189,12 @@ export async function fetchEventById(id: string): Promise<EventDetailData | null
     .eq("id", event.organization_id)
     .maybeSingle();
 
+  const { data: provenance } = await supabase
+    .from("evenements_import")
+    .select("event_id, source, source_url, conditions, registration")
+    .eq("event_id", id)
+    .maybeSingle();
+
   const now = new Date().toISOString();
   const { data: siblings } = await supabase
     .from("evenements")
@@ -177,7 +206,12 @@ export async function fetchEventById(id: string): Promise<EventDetailData | null
     .order("start_at")
     .limit(4);
 
-  return { event, org: org ?? null, siblings: siblings ?? [] };
+  return {
+    event,
+    org: org ?? null,
+    siblings: siblings ?? [],
+    provenance: (provenance as EventImport | null) ?? null,
+  };
 }
 
 // ══════════════════════════════════════════════════════════════
