@@ -25,6 +25,7 @@ import { LieuAgenda } from './pages/lieu/LieuAgenda.tsx'
 import { LieuEspaces } from './pages/lieu/LieuEspaces.tsx'
 import { LieuSoutenir } from './pages/lieu/LieuSoutenir.tsx'
 import { NotFound } from './pages/NotFound.tsx'
+import { MentionsLegales, Confidentialite } from './pages/Legal.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -42,6 +43,10 @@ createRoot(document.getElementById('root')!).render(
         {/* Annuaire des lieux du réseau (route fixe, avant :lieuSlug). */}
         <Route path="/lieux" element={<Lieux />} />
         <Route path="/contact" element={<Contact />} />
+        {/* Pages légales. Comme les précédentes, déclarées AVANT :lieuSlug,
+            sans quoi elles seraient interprétées comme des slugs de lieu. */}
+        <Route path="/mentions-legales" element={<MentionsLegales />} />
+        <Route path="/confidentialite" element={<Confidentialite />} />
         <Route path="/evenement/:id" element={<EventDetail />} />
         {/* Vitrine d'un lieu : casaminga.com/<slug> (belle URL). Les segments
             statiques ci-dessus l'emportent sur :lieuSlug (ranking react-router). */}

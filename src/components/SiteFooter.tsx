@@ -43,8 +43,13 @@ export function SiteFooter() {
             Facebook
           </a>
         </nav>
-        <p className="mt-6 text-xs" style={{ color: "var(--gray)" }}>
-          © {year} La Manufacture des Pays · Casaminga
+        {/* Les pages légales vivent ici, au dernier rang : elles doivent être
+            accessibles depuis chaque page du site, sans concurrencer la
+            navigation utile. */}
+        <p className="mt-6 flex flex-wrap gap-x-4 gap-y-1 text-xs" style={{ color: "var(--gray)" }}>
+          <span>© {year} La Manufacture des Pays · Casaminga</span>
+          <Link to="/mentions-legales" style={{ color: "var(--gray)" }}>Mentions légales</Link>
+          <Link to="/confidentialite" style={{ color: "var(--gray)" }}>Confidentialité</Link>
         </p>
       </div>
     </footer>

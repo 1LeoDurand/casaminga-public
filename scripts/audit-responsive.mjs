@@ -36,6 +36,8 @@ const ROUTES = [
   "/agenda",
   "/lieux",
   "/contact",
+  "/mentions-legales",
+  "/confidentialite",
   "/introuvable-volontairement",
 ];
 
