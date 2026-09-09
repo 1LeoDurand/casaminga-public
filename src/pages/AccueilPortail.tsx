@@ -471,26 +471,47 @@ export function AccueilPortail() {
           </div>
         </section>
 
-        {/* ── (f) Bandeau pro discret ─────────────────────────── */}
+        {/* ── (f) Bandeau « gérer son lieu », gabarit Eventbrite ──
+            Carte blanche posée sur un fond teinté, visuel à gauche, surtitre
+            coloré, accroche, sous-titre, et un bouton plein à droite. Le
+            bouton était blanc cerclé de gris : à l'endroit même où la page
+            demande une action, c'était le contrôle le moins visible. */}
         <div style={{ background: "var(--gray-light)" }}>
-          <div className="wrap flex flex-col items-center gap-4 py-8 text-center sm:flex-row sm:justify-between sm:text-left">
-            <div>
-              <p className="text-sm font-semibold" style={{ color: "var(--black)" }}>
-                Vous êtes une association ou un tiers-lieu ?
-              </p>
-              <p className="mt-0.5 text-sm" style={{ color: "var(--gray)" }}>
-                Gérez vos membres, vos événements et vos financements dans un seul outil.
-              </p>
-            </div>
-            <a
-              href="https://admin.casaminga.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="shrink-0 rounded-lg border px-5 py-2.5 text-sm font-semibold transition-colors"
-              style={{ borderColor: "var(--gray-mid)", color: "var(--black)", background: "#fff" }}
+          <div className="wrap py-8">
+            <div
+              className="flex flex-col items-center gap-5 rounded-2xl border p-5 text-center sm:flex-row sm:p-6 sm:text-left"
+              style={{ borderColor: "var(--gray-mid)", background: "#fff" }}
             >
-              Découvrir l'espace gestion →
-            </a>
+              <img
+                src="/hero-casaminga.jpg"
+                alt=""
+                width={96}
+                height={96}
+                className="size-20 shrink-0 rounded-xl object-cover sm:size-24"
+              />
+              <div className="min-w-0 flex-1">
+                <p
+                  className="text-[13px] font-bold"
+                  style={{ color: "var(--coral-deep)" }}
+                >
+                  Gérer son lieu sur Casaminga
+                </p>
+                <p className="mt-1 text-[19px] font-bold leading-snug" style={{ color: "var(--black)" }}>
+                  Vous êtes une association ou un tiers-lieu ?
+                </p>
+                <p className="mt-1 text-sm" style={{ color: "var(--gray)" }}>
+                  Gérez vos membres, vos événements et vos financements dans un seul outil.
+                </p>
+              </div>
+              <a
+                href="https://admin.casaminga.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-primary shrink-0"
+              >
+                Découvrir l'espace gestion
+              </a>
+            </div>
           </div>
         </div>
       </main>
