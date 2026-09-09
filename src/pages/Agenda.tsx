@@ -76,14 +76,21 @@ export function Agenda() {
       <main>
         {/* ── Intro rédigée (ancrage asso) ─────────────────────── */}
         <section className="wrap" style={{ paddingTop: "clamp(48px,7vw,84px)", paddingBottom: "clamp(24px,3vw,36px)" }}>
-          <span className="eyebrow">Agenda du réseau</span>
-          <h1 style={{ maxWidth: "20ch" }}>Les rendez-vous de La Manufacture des Pays</h1>
+          {/*
+            L'accroche disait « les rendez-vous des lieux animés par La
+            Manufacture des Pays et son réseau ». C'était vrai tant que
+            l'agenda ne contenait que les leurs ; l'import montpelliérain du
+            2026-09-09 en a fait une affirmation fausse pour la quasi-totalité
+            des fiches. Le site ne dit que ce qu'il tient : la double origine
+            est annoncée ici, et chaque fiche importée porte sa provenance.
+          */}
+          <span className="eyebrow">Agenda</span>
+          <h1 style={{ maxWidth: "20ch" }}>Ce qui se passe près de chez vous</h1>
           <p className="lead" style={{ marginTop: "18px" }}>
-            Cet agenda rassemble les rendez-vous des lieux animés par La Manufacture des Pays et son réseau&nbsp;:
+            Cet agenda réunit les rendez-vous des lieux animés par La Manufacture des Pays et son réseau,
             ateliers de la main, chantiers participatifs, rencontres autour du paysage et du patrimoine,
-            expositions et temps de transmission. Chaque événement prolonge la mission de l'association, le Faire,
-            le lien social et la co-construction, et la plateforme <strong>Casaminga</strong> les rend visibles et
-            accessibles à toutes et tous.
+            et les complète avec les événements publiés dans les agendas publics ouverts du territoire.
+            Les fiches reprises d'un agenda ouvert l'indiquent, et renvoient à leur source.
           </p>
           <p className="lead" style={{ marginTop: "12px" }}>
             Filtrez par moment (aujourd'hui, ce week-end) ou par type d'activité, puis ouvrez un événement pour en
