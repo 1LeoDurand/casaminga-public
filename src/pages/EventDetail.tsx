@@ -31,8 +31,8 @@ import {
  * revendication d'une fiche importée (colonnes `source` et `claim_status`
  * inexistantes à ce jour).
  *
- * Typographie : **Poppins** partout, comme le reste du site. Aucune police
- * d'affichage ici — Playfair Display ne sert que dans les composants `eb/*`.
+ * Typographie : **Poppins** partout, comme sur tout le site — c'est la seule
+ * police du projet, aucune police d'affichage ne vient s'y ajouter.
  */
 
 const STRUCTURE_LABELS: Record<string, string> = {

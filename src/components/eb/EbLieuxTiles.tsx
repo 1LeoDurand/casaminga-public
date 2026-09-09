@@ -16,7 +16,7 @@ export function EbLieuxTiles({ orgs, eventCounts }: EbLieuxTilesProps) {
         <div className="mb-7 flex items-end justify-between">
           <h2
             className="text-2xl font-bold"
-            style={{ fontFamily: "'Playfair Display', serif", color: "var(--black)" }}
+            style={{ color: "var(--black)" }}
           >
             Explorer par lieu
           </h2>

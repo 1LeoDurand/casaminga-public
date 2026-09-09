@@ -31,7 +31,6 @@ export function EbPromoBanner() {
         <h1
           className="mb-4 max-w-lg text-4xl font-bold leading-tight sm:text-5xl"
           style={{
-            fontFamily: "'Playfair Display', serif",
             color: "#fff",
             letterSpacing: "-0.5px",
           }}

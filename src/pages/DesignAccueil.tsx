@@ -206,7 +206,7 @@ export function DesignAccueil() {
             <div>
               <p
                 className="mb-1 text-lg font-bold"
-                style={{ fontFamily: "'Playfair Display', serif", color: "var(--black)" }}
+                style={{ color: "var(--black)" }}
               >
                 CasaMinga
               </p>

@@ -20,7 +20,7 @@ export function EbHeader({ search, onSearch, city, cities, onCityChange }: EbHea
         <Link
           to="/design-accueil"
           className="shrink-0 text-[18px] font-bold tracking-tight"
-          style={{ fontFamily: "'Playfair Display', serif", color: "var(--coral-deep)", letterSpacing: "-0.3px" }}
+          style={{ color: "var(--coral-deep)", letterSpacing: "-0.3px" }}
         >
           Casa<span style={{ color: "var(--black)" }}>Minga</span>
         </Link>

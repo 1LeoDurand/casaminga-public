@@ -93,7 +93,6 @@ export function EbEventCard({ event, org }: EbEventCardProps) {
         <h3
           className="mb-1 line-clamp-2 text-[15px] font-bold leading-snug"
           style={{
-            fontFamily: "'Playfair Display', serif",
             color: "var(--black)",
             letterSpacing: "-0.2px",
           }}
