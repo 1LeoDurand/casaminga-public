@@ -26,6 +26,10 @@ export function SiteFooter() {
           <Link to="/association" style={{ color: "var(--gray)" }}>L'association</Link>
           <Link to="/nos-actions" style={{ color: "var(--gray)" }}>Nos actions</Link>
           <Link to="/agenda" style={{ color: "var(--gray)" }}>Agenda</Link>
+          {/* « Les lieux » manquait ici alors qu'il est dans la navigation
+              principale : un pied de page qui n'offre pas les mêmes chemins
+              que le menu envoie le visiteur dans une impasse. */}
+          <Link to="/lieux" style={{ color: "var(--gray)" }}>Les lieux</Link>
           <Link to="/contact" style={{ color: "var(--gray)" }}>Contact</Link>
           <a href="mailto:manufacturedespays@gmail.com" style={{ color: "var(--gray)" }}>
             manufacturedespays@gmail.com
