@@ -1,16 +1,11 @@
 import { Link } from "react-router-dom";
 import type { PublicEvent, PublicOrg } from "../lib/supabase";
+import { resolveEventImage } from "../lib/event-images";
 
 const TYPE_LABELS: Record<string, string> = {
   atelier: "Atelier", concert: "Concert", exposition: "Exposition",
   conference: "Conférence", spectacle: "Spectacle", marche: "Marché",
   formation: "Formation", autre: "Événement",
-};
-
-// Glyphe unicode dominant par catégorie (pas d'icônes externes).
-const TYPE_GLYPHS: Record<string, string> = {
-  atelier: "🛠️", concert: "🎵", exposition: "🖼️", conference: "🎤",
-  spectacle: "🎭", marche: "🧺", formation: "📚", autre: "🎟️",
 };
 
 function fmtDate(iso: string) {
@@ -35,18 +30,16 @@ function gradientFromColor(c: string): string {
 }
 
 /**
- * EventCard — carte événement partagée (PROPRIÉTAIRE = ce fichier).
+ * EventCard : carte événement partagée (PROPRIÉTAIRE = ce fichier).
  * Aucun autre fichier ne doit redéfinir EventCard ; importez-la depuis ici.
- * Rendu 100% typographique : bandeau dégradé dérivé de org.primary_color +
- * glyphe de catégorie + initiales du lieu. Aucune interactivité réelle.
+ * Couverture photo (photo de la base, sinon image de catégorie), pastille de
+ * catégorie, puis titre, extrait, date et lieu.
  */
 export function EventCard({ event, org }: { event: PublicEvent; org?: PublicOrg }) {
   const color = org?.primary_color ?? "#FF8A65";
-  const initials = (org?.name ?? "··").slice(0, 2).toUpperCase();
   const orgName = org?.name ?? "Lieu du réseau";
   const price = fmtPrice(event.price);
   const label = TYPE_LABELS[event.type] ?? "Événement";
-  const glyph = TYPE_GLYPHS[event.type] ?? "🎟️";
 
   const start = new Date(event.start_at);
   const dayNum = start.toLocaleDateString("fr-FR", { day: "numeric" });
@@ -60,28 +53,29 @@ export function EventCard({ event, org }: { event: PublicEvent; org?: PublicOrg 
         aria-label={event.title}
         className="absolute inset-0 z-[1]"
       />
-      {/* (1) Couverture typographique */}
+      {/* (1) Couverture photo.
+          Une image d'abord, toujours : la photo de l'événement si la base en
+          porte une, sinon une image de la catégorie. Le dégradé ne sert plus
+          que de fond au chargement, et de secours si l'image ne répond pas. */}
       <div
-        className="relative h-20 w-full sm:h-24"
+        className="relative h-36 w-full overflow-hidden sm:h-40"
         style={{ background: gradientFromColor(color) }}
       >
-        {/* Initiales discrètes (texte blanc garanti lisible par le dégradé sombre) */}
+        <img
+          src={resolveEventImage(event.type, event.title, event.photos)}
+          alt=""
+          loading="lazy"
+          className="h-full w-full object-cover"
+          onError={(e) => { e.currentTarget.style.visibility = "hidden"; }}
+        />
+        {/* Pastille catégorie, posée sur la photo : voile sombre en dessous
+            pour rester lisible quelle que soit l'image. */}
         <span
-          className="absolute inset-0 flex items-center justify-center text-3xl font-extrabold text-white opacity-90"
-          style={{ textShadow: "0 1px 3px rgba(0,0,0,0.35)" }}
-          aria-hidden="true"
+          className="absolute bottom-2 left-2 inline-flex items-center rounded-full px-2.5 py-1 text-[11px] font-bold"
+          style={{ background: "rgba(255,251,240,0.94)", color: "var(--coral-deep)" }}
         >
-          {initials}
-        </span>
-        {/* Mini-pill catégorie (bas-gauche) */}
-        <span
-          className="absolute bottom-2 left-2 inline-flex items-center gap-1 rounded-full px-2 py-1 text-[11px] font-bold"
-          style={{ background: "var(--peach-pale)", color: "var(--coral-deep)", border: "1px solid var(--peach)" }}
-        >
-          <span aria-hidden="true">{glyph}</span>
           {label}
         </span>
-        {/* Favoris : retiré du rendu (non câblé). À réintroduire avec la feature. */}
       </div>
 
       {/* (2) Corps */}
@@ -93,7 +87,7 @@ export function EventCard({ event, org }: { event: PublicEvent; org?: PublicOrg 
             </span>
           )}
         </div>
-        <h3 className="text-[18px] font-bold leading-snug" style={{ color: "var(--black)" }}>{event.title}</h3>
+        <h3 className="text-[17px] font-bold leading-snug" style={{ color: "var(--black)" }}>{event.title}</h3>
         {event.description && (
           <p className="mt-2 line-clamp-2 flex-1 text-sm leading-relaxed" style={{ color: "var(--gray)" }}>
             {event.description}
@@ -113,7 +107,7 @@ export function EventCard({ event, org }: { event: PublicEvent; org?: PublicOrg 
           </div>
           <div className="min-w-0">
             <div className="text-xs" style={{ color: "var(--gray)" }}>
-              <span className="sr-only">{fmtDate(event.start_at)} — </span>{fmtTime(event.start_at)}
+              <span className="sr-only">{fmtDate(event.start_at)}, </span>{fmtTime(event.start_at)}
             </div>
             <div className="mt-0.5 truncate text-xs font-semibold" style={{ color: "var(--black)" }}>{orgName}</div>
           </div>
@@ -140,7 +134,7 @@ interface EventGridProps {
 }
 
 /**
- * EventGrid — grille principale d'événements, alimentée par la liste DÉJÀ
+ * EventGrid, grille principale d'événements, alimentée par la liste DÉJÀ
  * filtrée fournie par DiscoverySection. Fait le lookup org via orgMap UNE fois
  * et passe org en prop à EventCard. Gère l'état vide contextualisé.
  */

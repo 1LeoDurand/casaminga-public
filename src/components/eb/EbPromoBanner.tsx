@@ -38,7 +38,7 @@ export function EbPromoBanner() {
           Découvrez ce qui se passe près de chez vous
         </h1>
         <p className="mb-8 max-w-md text-base" style={{ color: "rgba(255,255,255,0.80)" }}>
-          Ateliers, concerts, marchés, expositions — tous les événements
+          Ateliers, concerts, marchés, expositions, tous les événements
           des tiers-lieux du réseau en un seul endroit.
         </p>
         <a

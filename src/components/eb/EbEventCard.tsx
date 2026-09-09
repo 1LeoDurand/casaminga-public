@@ -91,7 +91,7 @@ export function EbEventCard({ event, org }: EbEventCardProps) {
 
         {/* Titre */}
         <h3
-          className="mb-1 line-clamp-2 text-[15px] font-bold leading-snug"
+          className="mb-1 line-clamp-2 text-[16px] font-bold leading-snug"
           style={{
             color: "var(--black)",
             letterSpacing: "-0.2px",
@@ -115,7 +115,7 @@ export function EbEventCard({ event, org }: EbEventCardProps) {
               {price}
             </span>
           ) : (
-            <span className="text-sm" style={{ color: "var(--gray)" }}>—</span>
+            <span className="text-sm" style={{ color: "var(--gray)" }}>·</span>
           )}
         </div>
       </div>

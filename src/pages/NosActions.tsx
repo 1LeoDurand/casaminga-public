@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { SiteHeader } from "../components/SiteHeader";
 import { SiteFooter } from "../components/SiteFooter";
 import { fetchUpcomingEvents, fetchPublicOrgs, type PublicEvent, type PublicOrg } from "../lib/supabase";
-import { fmtDate, fmtPrice, TYPE_GLYPHS } from "../lib/event-meta";
+import { fmtDate, fmtPrice } from "../lib/event-meta";
 
 /**
  * Page « Nos actions » (item A4 des DIRECTIVES-AD-GRANT.md).
@@ -16,7 +16,7 @@ const THEMES = [
   {
     eyebrow: "Ateliers de la main",
     title: "Transmettre par le geste",
-    body: "Travail du bois, modelage de la terre, tissage : nos ateliers de la main développent les potentialités créatrices de chacun par la pratique. L'atelier de tissage de La Distillerie réunit ses participants chaque jeudi après-midi depuis l'été 2021 ; d'autres interventions ont accompagné des jeunes en écoles, collèges et établissements médico-sociaux — comme cette belle réalisation menée avec les jeunes de la MECS Terre Rouge, à Clermont-l'Hérault.",
+    body: "Travail du bois, modelage de la terre, tissage : nos ateliers de la main développent les potentialités créatrices de chacun par la pratique. L'atelier de tissage de La Distillerie réunit ses participants chaque jeudi après-midi depuis l'été 2021 ; d'autres interventions ont accompagné des jeunes en écoles, collèges et établissements médico-sociaux, comme cette belle réalisation menée avec les jeunes de la MECS Terre Rouge, à Clermont-l'Hérault.",
     color: "mint",
   },
   {
@@ -62,7 +62,7 @@ export function NosActions() {
           <p className="lead" style={{ marginTop: "18px" }}>
             La Manufacture des Pays agit là où se croisent l'éducation, l'architecture, le paysage et le lien
             social. Nos actions prennent corps dans des ateliers, des chantiers participatifs et des projets de
-            territoire — et c'est sur <strong>Casaminga</strong> que vous en retrouvez les rendez-vous concrets,
+            territoire, et c'est sur <strong>Casaminga</strong> que vous en retrouvez les rendez-vous concrets,
             ouverts à toutes et tous.
           </p>
         </section>
@@ -96,7 +96,6 @@ export function NosActions() {
                   const price = fmtPrice(e.price);
                   return (
                     <Link key={e.id} to={`/evenement/${e.id}`} className="card" style={{ padding: "20px", display: "block" }}>
-                      <div style={{ fontSize: "26px", marginBottom: "10px" }}>{TYPE_GLYPHS[e.type] ?? TYPE_GLYPHS.autre}</div>
                       <div style={{ fontSize: "12px", fontWeight: 600, color: "var(--coral-deep)", marginBottom: "4px" }}>
                         {fmtDate(e.start_at)}
                       </div>

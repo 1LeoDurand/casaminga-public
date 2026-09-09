@@ -4,11 +4,11 @@ import { SiteHeader, HELLOASSO_ADHESION } from "../components/SiteHeader";
 import { SiteFooter } from "../components/SiteFooter";
 import logoManufacture from "../assets/logo-manufacture.jpg";
 import { fetchUpcomingEvents, fetchPublicOrgs, type PublicEvent, type PublicOrg } from "../lib/supabase";
-import { fmtDate, fmtPrice, TYPE_GLYPHS } from "../lib/event-meta";
+import { fmtDate, fmtPrice } from "../lib/event-meta";
 
 /**
  * Accueil institutionnel La Manufacture des Pays (asso loi 1901, éditrice de
- * Casaminga). Page racine `/` — objectif Google Ad Grant : présenter l'asso
+ * Casaminga). Page racine `/`, objectif Google Ad Grant : présenter l'asso
  * et sa mission AVANT la découverte d'événements (la grille Eventbrite est
  * « mise de côté » en /agenda). Voir DIRECTIVES-AD-GRANT.md [A3].
  *
@@ -33,11 +33,11 @@ export function Accueil() {
       <SiteHeader />
 
       <main>
-        {/* ── Bandeau logo (hero) — logo officiel de l'association ─ */}
+        {/* ── Bandeau logo (hero), logo officiel de l'association ─ */}
         <section className="wrap" style={{ paddingTop: "clamp(36px,6vw,64px)", textAlign: "center" }}>
           <img
             src={logoManufacture}
-            alt="La Manufacture des Pays — deux mains, l'une dessinée d'un plan de ville, l'autre d'un paysage, se tendant l'une vers l'autre"
+            alt="La Manufacture des Pays, deux mains, l'une dessinée d'un plan de ville, l'autre d'un paysage, se tendant l'une vers l'autre"
             style={{ width: "min(500px, 90%)", height: "auto", margin: "0 auto", mixBlendMode: "multiply" }}
           />
         </section>
@@ -49,8 +49,8 @@ export function Accueil() {
           <p className="lead" style={{ marginTop: "22px" }}>
             La Manufacture des Pays accueille le <strong>tiers-lieu Bernard Kohn à Saint-Mandé</strong>,
             ouvert en janvier 2026 dans l'ancienne maison et atelier de l'architecte. Héritière de quatorze
-            années de la Manufacture des Paysages, l'association réunit des bénévoles de tous horizons —
-            architectes, artisans, éducateurs, artistes, écologues, formateurs — autour du Faire, de la
+            années de la Manufacture des Paysages, l'association réunit des bénévoles de tous horizons -
+            architectes, artisans, éducateurs, artistes, écologues, formateurs, autour du Faire, de la
             co-construction, de l'intelligence collective, du lien social, de la citoyenneté et de la transmission.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
@@ -134,7 +134,6 @@ export function Accueil() {
                   const price = fmtPrice(e.price);
                   return (
                     <Link key={e.id} to={`/evenement/${e.id}`} className="card" style={{ padding: "20px", display: "block" }}>
-                      <div style={{ fontSize: "26px", marginBottom: "10px" }}>{TYPE_GLYPHS[e.type] ?? TYPE_GLYPHS.autre}</div>
                       <div style={{ fontSize: "12px", fontWeight: 600, color: "var(--coral-deep)", marginBottom: "4px" }}>
                         {fmtDate(e.start_at)}
                       </div>

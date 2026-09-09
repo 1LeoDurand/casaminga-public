@@ -14,10 +14,7 @@ export function EbLieuxTiles({ orgs, eventCounts }: EbLieuxTilesProps) {
     <section className="bg-white py-12">
       <div className="wrap">
         <div className="mb-7 flex items-end justify-between">
-          <h2
-            className="text-2xl font-bold"
-            style={{ color: "var(--black)" }}
-          >
+          <h2 style={{ color: "var(--black)" }}>
             Explorer par lieu
           </h2>
           <span className="text-sm" style={{ color: "var(--gray)" }}>

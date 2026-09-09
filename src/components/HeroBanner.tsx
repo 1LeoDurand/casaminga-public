@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
  *   < sm  : carte plus courte, accroche en bas à gauche, sujet visible en haut
  *
  * La vidéo est décorative : muette, en boucle, sans contrôle, `aria-hidden`.
- * Elle ne porte aucune information — tout le sens est dans le texte au-dessus.
+ * Elle ne porte aucune information, tout le sens est dans le texte au-dessus.
  */
 
 /** Surlignage des lignes d'accroche : dégradé chaud, texte noir. */
@@ -22,7 +22,7 @@ export function HeroBanner() {
   /**
    * `prefers-reduced-motion` : on sert l'image fixe au lieu de la vidéo. Le
    * réglage est lu côté client, donc l'image est aussi ce qui s'affiche au
-   * premier rendu — elle sert alors de poster.
+   * premier rendu, elle sert alors de poster.
    */
   const [animate, setAnimate] = useState(false);
   useEffect(() => {

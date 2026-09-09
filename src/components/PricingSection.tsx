@@ -62,7 +62,7 @@ export function PricingSection() {
                 {plan.highlight && (
                   <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full px-3 py-1 text-[11px] font-bold text-white" style={{ background: "var(--coral)" }}>Le plus choisi</span>
                 )}
-                <h3 className="text-[20px] font-bold" style={{ color: "var(--black)" }}>{plan.name}</h3>
+                <h3 className="text-[18px] font-bold" style={{ color: "var(--black)" }}>{plan.name}</h3>
                 <p className="mb-4 text-sm" style={{ color: "var(--gray)" }}>{plan.tagline}</p>
                 <div className="mb-6">
                   <span className="text-[40px] font-extrabold" style={{ color: "var(--black)" }}>{display}</span>

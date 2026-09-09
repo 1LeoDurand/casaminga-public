@@ -1,5 +1,5 @@
 // Constantes partagées entre EventGrid.tsx (original) et les composants eb/.
-// EventGrid.tsx n'est PAS modifié — il duplique ces valeurs intentionnellement.
+// EventGrid.tsx n'est PAS modifié, il duplique ces valeurs intentionnellement.
 
 export const TYPE_LABELS: Record<string, string> = {
   atelier: "Atelier",
@@ -21,7 +21,7 @@ export const TYPE_LABELS: Record<string, string> = {
 /**
  * Catégories proposées comme filtres, dans l'ordre d'affichage.
  * Volontairement plus court que TYPE_LABELS : un libellé sert à décrire une
- * fiche, un filtre sert à naviguer — les deux listes n'ont pas à coïncider.
+ * fiche, un filtre sert à naviguer, les deux listes n'ont pas à coïncider.
  */
 export const FILTER_CATEGORIES = [
   "atelier",

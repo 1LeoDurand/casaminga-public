@@ -3,14 +3,14 @@ import { useParams, Link } from "react-router-dom";
 import {
   CalendarDays, Clock, MapPin, Share2, Ticket, Users, ArrowRight,
 } from "lucide-react";
-// Chrome institutionnel (liens routeur uniquement) — l'ancien Nav/Footer de la
+// Chrome institutionnel (liens routeur uniquement), l'ancien Nav/Footer de la
 // landing pointait vers des ancres (#lieux, #adhesions…) inexistantes ici.
 import { SiteHeader } from "../components/SiteHeader";
 import { SiteFooter } from "../components/SiteFooter";
 import { EventCard } from "../components/EventGrid";
 import { EbMap } from "../components/eb/EbMap";
 import { resolveEventImage } from "../lib/event-images";
-import { TYPE_LABELS, TYPE_GLYPHS } from "../lib/event-meta";
+import { TYPE_LABELS } from "../lib/event-meta";
 import {
   fetchEventById, fetchDiscoveryEvents, fetchPublicEstablishments, fetchPublicOrgs,
   type EventDetailData, type PublicEvent, type PublicOrg, type PublicEstablishment,
@@ -26,12 +26,12 @@ import {
  *   3  lieu éditeur  6  aperçu                11 autres rendez-vous du lieu
  *   7  bon à savoir                           12 dans le réseau · 13 agenda
  *
- * **Sections volontairement absentes**, faute de données en base — une section
+ * **Sections volontairement absentes**, faute de données en base, une section
  * vide serait un décor : la FAQ, le signalement, et le couple provenance /
  * revendication d'une fiche importée (colonnes `source` et `claim_status`
  * inexistantes à ce jour).
  *
- * Typographie : **Poppins** partout, comme sur tout le site — c'est la seule
+ * Typographie : **Poppins** partout, comme sur tout le site, c'est la seule
  * police du projet, aucune police d'affichage ne vient s'y ajouter.
  */
 
@@ -86,9 +86,9 @@ function CenteredState({ children }: { children: React.ReactNode }) {
   );
 }
 
-/** Titre de section — Poppins, même échelle sur toute la page. */
+/** Titre de section, Poppins, même échelle sur toute la page. */
 function SectionTitle({ children }: { children: React.ReactNode }) {
-  return <h2 style={{ fontSize: "clamp(21px,2.7vw,27px)" }}>{children}</h2>;
+  return <h2>{children}</h2>;
 }
 
 export function EventDetail() {
@@ -153,7 +153,7 @@ export function EventDetail() {
   if (!data) {
     return (
       <CenteredState>
-        <h1 style={{ fontSize: "clamp(28px,4vw,40px)" }}>Événement introuvable</h1>
+        <h1>Événement introuvable</h1>
         <p className="lead">Cet événement n'existe pas ou n'est plus publié.</p>
         <Link to="/agenda" className="btn btn-primary mt-2">← Retour à l'agenda</Link>
       </CenteredState>
@@ -164,7 +164,6 @@ export function EventDetail() {
   const color = org?.primary_color ?? "#FF8A65";
   const orgName = org?.name ?? "Lieu du réseau";
   const label = TYPE_LABELS[event.type] ?? "Événement";
-  const glyph = TYPE_GLYPHS[event.type] ?? "🎟️";
   const price = fmtPrice(event.price);
   const duration = formatDuration(event.start_at, event.end_at);
   const structure = STRUCTURE_LABELS[org?.structure ?? ""] ?? "Tiers-lieu";
@@ -260,14 +259,16 @@ export function EventDetail() {
           {/* ── Colonne principale ───────────────────────────────── */}
           <div className="flex flex-col gap-9">
             <div>
-              {/* 2 · Titre — et la catégorie qui le situe */}
+              {/* 2 · Titre, et la catégorie qui le situe */}
               <span
                 className="inline-flex w-fit items-center gap-2 rounded-full px-3 py-1 text-xs font-bold"
                 style={{ background: "var(--peach-pale)", color: "var(--coral-deep)" }}
               >
-                <span aria-hidden="true">{glyph}</span> {label}
+                {label}
               </span>
-              <h1 className="mt-3" style={{ fontSize: "clamp(27px,4vw,42px)", maxWidth: "20ch" }}>
+              {/* 20ch cassait les titres longs en quatre lignes : la mesure,
+                  pas le corps, faisait paraître le titre énorme. */}
+              <h1 className="mt-3" style={{ maxWidth: "26ch" }}>
                 {event.title}
               </h1>
 
@@ -346,7 +347,7 @@ export function EventDetail() {
               </div>
             </section>
 
-            {/* 8 · Lieu — la carte n'apparaît que si le lieu est géolocalisé */}
+            {/* 8 · Lieu, la carte n'apparaît que si le lieu est géolocalisé */}
             <section>
               <SectionTitle>Lieu</SectionTitle>
               <div className="card mt-3 p-5">
@@ -491,7 +492,7 @@ export function EventDetail() {
         {/* ── 13 · Poursuivre ──────────────────────────────────────── */}
         <section style={{ background: "var(--peach-pale)", padding: "clamp(36px,5vw,56px) 0" }}>
           <div className="wrap text-center">
-            <h2 style={{ fontSize: "clamp(19px,2.4vw,24px)" }}>
+            <h2>
               Vous cherchez autre chose près de chez vous ?
             </h2>
             <p className="mt-2 text-sm" style={{ color: "var(--gray)" }}>

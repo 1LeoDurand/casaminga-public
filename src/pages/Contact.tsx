@@ -4,7 +4,7 @@ import { SiteFooter } from "../components/SiteFooter";
 /**
  * Page « Contact » + identité légale (item A2 des DIRECTIVES-AD-GRANT.md).
  * Exigence Google Ad Grant : identité de l'éditeur vérifiable (adresse réelle,
- * email, loi 1901, RNA/SIREN). Aucun champ non câblé — contact par email direct.
+ * email, loi 1901, RNA/SIREN). Aucun champ non câblé, contact par email direct.
  */
 export function Contact() {
   return (
@@ -16,7 +16,7 @@ export function Contact() {
           <span className="eyebrow">Contact</span>
           <h1 style={{ maxWidth: "16ch" }}>Nous écrire, nous rejoindre</h1>
           <p className="lead" style={{ marginTop: "18px" }}>
-            La Manufacture des Pays — association loi 1901, éditrice de la plateforme Casaminga — accueille
+            La Manufacture des Pays, association loi 1901, éditrice de la plateforme Casaminga, accueille
             bénévoles, partenaires et curieux. Pour toute question sur l'association, ses ateliers ou Casaminga,
             écrivez-nous&nbsp;: nous répondons à chaque message.
           </p>
@@ -31,14 +31,14 @@ export function Contact() {
                 <div>
                   <dt style={{ fontSize: "12px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: "var(--coral-deep)" }}>Siège</dt>
                   <dd style={{ margin: "4px 0 0", color: "var(--black-soft)" }}>
-                    Atelier Bernard Kohn — La Distillerie<br />
+                    Atelier Bernard Kohn, La Distillerie<br />
                     10 rue de la sous-préfecture, 34700 Lodève
                   </dd>
                 </div>
                 <div>
                   <dt style={{ fontSize: "12px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: "var(--coral-deep)" }}>Établissement secondaire</dt>
                   <dd style={{ margin: "4px 0 0", color: "var(--black-soft)" }}>
-                    Tiers-lieu Bernard Kohn — Saint-Mandé<br />
+                    Tiers-lieu Bernard Kohn, Saint-Mandé<br />
                     (ouvert en janvier 2026)
                   </dd>
                 </div>
@@ -80,7 +80,7 @@ export function Contact() {
                   <dt style={{ color: "var(--gray)" }}>Statut</dt>
                   <dd style={{ margin: 0, color: "var(--black-soft)" }}>Association déclarée (loi 1901)</dd>
                   <dt style={{ color: "var(--gray)" }}>RNA</dt>
-                  <dd style={{ margin: 0, color: "var(--black-soft)" }}>W342002465 — inscrite le 12/10/2016</dd>
+                  <dd style={{ margin: 0, color: "var(--black-soft)" }}>W342002465, inscrite le 12/10/2016</dd>
                   <dt style={{ color: "var(--gray)" }}>SIREN</dt>
                   <dd style={{ margin: 0, color: "var(--black-soft)" }}>824 820 856</dd>
                   <dt style={{ color: "var(--gray)" }}>SIRET (siège)</dt>

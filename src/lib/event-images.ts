@@ -1,4 +1,4 @@
-// Images thématiques par type d'événement — source Unsplash (licence libre).
+// Images thématiques par type d'événement, source Unsplash (licence libre).
 // URL stable : https://images.unsplash.com/photo-{ID}?w=800&q=80&fit=crop&auto=format
 // Priorité d'affichage : photos[] BDD → keyword title → catégorie → dégradé (fallback).
 

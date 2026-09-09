@@ -4,7 +4,7 @@
  * public_sites.content_blocks).
  *
  * Sur casaminga.com le thème est volontairement harmonisé "Casa Minga"
- * (crème/corail) — comme côté admin via applyHostTheme. On ne réplique donc
+ * (crème/corail), comme côté admin via applyHostTheme. On ne réplique donc
  * PAS le système des 11 thèmes : seuls le contenu, l'accent et les toggles
  * (sections / pages) sont consommés ici.
  */

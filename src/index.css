@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 /* ════════════════════════════════════════════
-   Casa Minga — design chaleureux crème/corail
+   Casa Minga, design chaleureux crème/corail
    Palette officielle Claude Design
    ════════════════════════════════════════════ */
 :root{
@@ -50,10 +50,23 @@ a{ color:var(--coral-dark); text-decoration:none; transition:color .2s var(--eas
 a:hover{ color:var(--coral-deep); }
 ::selection{ background:rgba(255,138,101,0.28); color:var(--black); }
 
-h1,h2,h3,h4{ font-weight:700; letter-spacing:-0.5px; text-wrap:balance; color:var(--black); margin:0; }
-h1{ font-size:clamp(36px,5.4vw,60px); line-height:1.05; }
-h2{ font-size:clamp(28px,3.8vw,42px); line-height:1.15; }
-h3{ font-size:clamp(20px,2.2vw,26px); line-height:1.25; }
+/*
+ * Échelle de titres, un seul endroit, quatre crans (2026-09-09).
+ *
+ * Avant, chaque page redéfinissait ses tailles en ligne : quatre `h2`
+ * différents cohabitaient sur l'accueil (30, 28, 24, 22 px), si bien qu'un
+ * titre de section ne se reconnaissait plus à sa taille. Les valeurs vivent
+ * désormais ici, et les pages n'en déclarent plus.
+ *
+ * Lisibilité : l'interlignage s'ouvre à mesure que le corps diminue (1,15 →
+ * 1,4), et le crénage négatif se relâche de même, à -0,5 px, Poppins se
+ * resserre trop sous 20 px. Chaque cran vaut environ 1,35 fois le suivant.
+ */
+h1,h2,h3,h4{ font-weight:700; text-wrap:balance; color:var(--black); margin:0; }
+h1{ font-size:clamp(28px,3.4vw,38px); line-height:1.15; letter-spacing:-0.6px; }
+h2{ font-size:clamp(21px,2.3vw,26px); line-height:1.25; letter-spacing:-0.4px; }
+h3{ font-size:clamp(17px,1.5vw,19px); line-height:1.35; letter-spacing:-0.2px; }
+h4{ font-size:16px; line-height:1.4; letter-spacing:-0.1px; }
 p{ text-wrap:pretty; margin:0; }
 
 @layer components {

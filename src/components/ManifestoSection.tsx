@@ -8,7 +8,7 @@ export function ManifestoSection() {
             <h2 className="mb-4">Des lieux où l'on fait ensemble.</h2>
             <p className="mb-3.5" style={{ fontSize: "16px", color: "var(--black-soft)", lineHeight: 1.75, maxWidth: "60ch" }}>
               Casa Minga connecte les tiers-lieux culturels, associatifs et hybrides de France.
-              Des espaces qui croient que créer, partager et décider ensemble, c'est possible — et nécessaire.
+              Des espaces qui croient que créer, partager et décider ensemble, c'est possible, et nécessaire.
             </p>
             <p style={{ fontSize: "16px", color: "var(--black-soft)", lineHeight: 1.75, maxWidth: "60ch" }}>
               Chaque lieu garde son identité, ses couleurs, sa communauté. Casa Minga les relie sans les uniformiser.

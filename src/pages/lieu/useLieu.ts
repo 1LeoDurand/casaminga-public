@@ -34,7 +34,7 @@ export function useLieu(slug: string | undefined): LieuState {
   useEffect(() => {
     if (!state.data) return;
     const prev = document.title;
-    document.title = `${state.data.org.name} — Casa Minga`;
+    document.title = `${state.data.org.name}, Casa Minga`;
     return () => { document.title = prev; };
   }, [state.data]);
 

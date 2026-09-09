@@ -29,7 +29,7 @@ export function EbFilterBar({
 
   return (
     <div className="flex flex-wrap items-center gap-2">
-      {/* Filtre prix — chips */}
+      {/* Filtre prix, chips */}
       <div
         className="flex overflow-hidden rounded-lg border"
         style={{ borderColor: "var(--gray-mid)" }}

@@ -29,7 +29,7 @@ import { EbMap } from "../components/eb/EbMap";
  * et le SiteFooter porte l'identité légale complète.
  *
  * Tout le filtrage est client (aucune requête au changement de filtre) et
- * chaque contrôle est réellement câblé — aucun bouton inerte, aucun lien mort.
+ * chaque contrôle est réellement câblé, aucun bouton inerte, aucun lien mort.
  */
 
 /** Extrait une ville depuis une adresse postale libre (best effort). */
@@ -176,13 +176,16 @@ export function AccueilPortail() {
           <div className="wrap" style={{ padding: "clamp(40px,6vw,72px) 28px" }}>
             <span className="eyebrow">L'agenda des lieux du réseau</span>
             {/* h2 : le h1 de la page est porté par la bannière ci-dessus. */}
-            <h2 style={{ maxWidth: "18ch", fontSize: "clamp(30px,4.4vw,46px)", lineHeight: 1.08 }}>
+            {/* Seule surcharge de l'échelle : cette phrase ouvre la page et
+                doit peser plus qu'un titre de section, sans monter au niveau
+                de la bannière. 24ch pour tenir sur trois lignes courtes. */}
+            <h2 style={{ maxWidth: "24ch", fontSize: "clamp(26px,3vw,33px)", lineHeight: 1.2 }}>
               Découvrez et faites vivre les lieux près de chez vous
             </h2>
             <p className="lead" style={{ marginTop: "20px" }}>
               Ateliers de la main, concerts, chantiers participatifs, expositions, rencontres :
               retrouvez ici tous les rendez-vous ouverts des tiers-lieux animés par le réseau
-              Casaminga. Poussez la porte de celui qui est le plus proche de chez vous — la
+              Casaminga. Poussez la porte de celui qui est le plus proche de chez vous, la
               plupart des rendez-vous sont gratuits et ouverts à toutes et tous.
             </p>
 
@@ -256,7 +259,7 @@ export function AccueilPortail() {
         )}
 
         <section id="evenements" className="wrap" style={{ padding: "clamp(32px,5vw,48px) 28px" }}>
-          <h2 style={{ fontSize: "clamp(22px,2.6vw,30px)" }}>
+          <h2>
             {city ? `Événements à ${city}` : "Les prochains rendez-vous"}
           </h2>
 
@@ -341,7 +344,7 @@ export function AccueilPortail() {
           ) : (
             <section className="bg-white py-12">
               <div className="wrap" style={{ textAlign: "center" }}>
-                <h2 style={{ fontSize: "clamp(22px,2.6vw,30px)" }}>Les lieux du réseau</h2>
+                <h2>Les lieux du réseau</h2>
                 <p className="lead" style={{ margin: "14px auto 0" }}>
                   {loadError
                     ? "La liste des lieux n'a pas pu être chargée. Réessayez dans quelques minutes ou écrivez-nous."
@@ -363,7 +366,7 @@ export function AccueilPortail() {
               style={{ borderColor: "var(--gray-mid)", background: "var(--cream-warm)" }}
             >
               <div className="wrap" style={{ padding: "clamp(32px,5vw,48px) 28px" }}>
-                <h2 style={{ fontSize: "clamp(22px,2.6vw,30px)" }}>Le réseau sur la carte</h2>
+                <h2>Le réseau sur la carte</h2>
                 <p className="lead" style={{ marginTop: "10px", marginBottom: "22px" }}>
                   Cliquez sur un point pour ouvrir la vitrine du lieu.
                 </p>
@@ -391,7 +394,7 @@ export function AccueilPortail() {
             <div className="grid gap-5 md:grid-cols-3">
               <article className="card" style={{ padding: "28px" }}>
                 <Heart size={22} aria-hidden="true" style={{ color: "var(--coral-deep)" }} />
-                <h3 style={{ fontSize: "20px", marginTop: "14px" }}>Adhérer</h3>
+                <h3 style={{ marginTop: "14px" }}>Adhérer</h3>
                 <p className="lead" style={{ marginTop: "10px", maxWidth: "none" }}>
                   Rejoignez La Manufacture des Pays : l'adhésion soutient l'association et vous
                   ouvre la vie du réseau, ses chantiers et ses assemblées.
@@ -408,7 +411,7 @@ export function AccueilPortail() {
 
               <article className="card" style={{ padding: "28px" }}>
                 <Users size={22} aria-hidden="true" style={{ color: "var(--coral-deep)" }} />
-                <h3 style={{ fontSize: "20px", marginTop: "14px" }}>Soutenir</h3>
+                <h3 style={{ marginTop: "14px" }}>Soutenir</h3>
                 <p className="lead" style={{ marginTop: "10px", maxWidth: "none" }}>
                   Découvrez la mission de l'association, ses actions de terrain et les façons de
                   l'accompagner dans la durée.
@@ -420,7 +423,7 @@ export function AccueilPortail() {
 
               <article className="card" style={{ padding: "28px" }}>
                 <Calendar size={22} aria-hidden="true" style={{ color: "var(--coral-deep)" }} />
-                <h3 style={{ fontSize: "20px", marginTop: "14px" }}>Devenir bénévole</h3>
+                <h3 style={{ marginTop: "14px" }}>Devenir bénévole</h3>
                 <p className="lead" style={{ marginTop: "10px", maxWidth: "none" }}>
                   Un chantier, un atelier, un accueil à tenir : dites-nous ce que vous aimez faire,
                   nous vous mettons en lien avec le lieu le plus proche.

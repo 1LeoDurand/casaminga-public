@@ -30,7 +30,7 @@ export function LieuAgenda() {
         <h1>Agenda</h1>
         <p className="lead mt-3">Tous les rendez-vous à venir du lieu.</p>
 
-        {/* Abonnement iCal (Google Agenda, Apple, Outlook…) — servi par l'admin. */}
+        {/* Abonnement iCal (Google Agenda, Apple, Outlook…), servi par l'admin. */}
         <a
           href={`${ADMIN_BASE}/site/${slug}/agenda.ics`}
           className="mt-4 inline-flex w-fit items-center gap-1.5 rounded-full px-3 py-1 text-[12px] font-semibold"

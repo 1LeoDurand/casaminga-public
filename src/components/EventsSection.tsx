@@ -30,7 +30,7 @@ function EventCard({ event, org }: { event: PublicEvent; org?: PublicOrg }) {
             <span className="text-sm font-bold" style={{ color: price === "Gratuit" ? "#2f8a4c" : "var(--black)" }}>{price}</span>
           )}
         </div>
-        <h3 className="text-[18px] font-bold leading-snug" style={{ color: "var(--black)" }}>{event.title}</h3>
+        <h3 className="text-[17px] font-bold leading-snug" style={{ color: "var(--black)" }}>{event.title}</h3>
         {event.description && (
           <p className="mt-2 line-clamp-2 flex-1 text-sm leading-relaxed" style={{ color: "var(--gray)" }}>{event.description}</p>
         )}
@@ -54,7 +54,7 @@ export function EventsSection({ events, orgs }: { events: PublicEvent[]; orgs: P
         <div className="section-head">
           <div className="eyebrow blue">À venir dans les lieux</div>
           <h2>Les prochains événements</h2>
-          <p className="lead">Ateliers, concerts, expositions, AG ouvertes — ce qui se vit dans le réseau.</p>
+          <p className="lead">Ateliers, concerts, expositions, AG ouvertes, ce qui se vit dans le réseau.</p>
         </div>
         {events.length === 0 ? (
           <div className="card py-16 text-center" style={{ borderStyle: "dashed", color: "var(--gray)" }}>

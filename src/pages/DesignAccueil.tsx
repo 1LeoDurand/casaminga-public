@@ -14,11 +14,11 @@ import { EbMap } from "../components/eb/EbMap";
 import { EbLieuxTiles } from "../components/eb/EbLieuxTiles";
 
 /**
- * MAQUETTE HORS ROUTING — la route /design-accueil a été retirée de main.tsx :
+ * MAQUETTE HORS ROUTING, la route /design-accueil a été retirée de main.tsx :
  * son contenu (découverte d'événements + lieux + carte) est désormais servi par
  * src/pages/AccueilPortail.tsx sur « / ». Ce fichier est conservé comme
  * référence de composition ; il n'est importé par aucun module rendu.
- * Ses liens internes vers /design-accueil ne sont donc jamais servis — les
+ * Ses liens internes vers /design-accueil ne sont donc jamais servis, les
  * réactiver imposerait de recréer la route.
  */
 function extractCity(address: string | null): string | null {
@@ -176,7 +176,7 @@ export function DesignAccueil() {
         <EbLieuxTiles orgs={orgs} eventCounts={eventCounts} />
       </div>
 
-      {/* Encart cross-sell asso — discret */}
+      {/* Encart cross-sell asso, discret */}
       <div className="border-t" style={{ borderColor: "var(--gray-mid)", background: "var(--gray-light)" }}>
         <div className="wrap flex flex-col items-center gap-4 py-10 text-center sm:flex-row sm:justify-between sm:text-left">
           <div>

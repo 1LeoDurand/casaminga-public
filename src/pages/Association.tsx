@@ -19,8 +19,8 @@ export function Association() {
           <span className="eyebrow">L'association · loi 1901</span>
           <h1 style={{ maxWidth: "18ch" }}>La Manufacture des Pays</h1>
           <p className="lead" style={{ marginTop: "20px" }}>
-            La Manufacture des Pays réunit des bénévoles de formation, de disciplines et de métiers très divers —
-            architectes, artisans, éducateurs, artistes, écologues, formateurs, actifs et retraités — qui
+            La Manufacture des Pays réunit des bénévoles de formation, de disciplines et de métiers très divers -
+            architectes, artisans, éducateurs, artistes, écologues, formateurs, actifs et retraités, qui
             partagent une même ambition&nbsp;: aborder les questions liées à l'éducation, l'architecture,
             l'urbanisme, le paysage et le patrimoine par une approche transversale. Ses mots-clés&nbsp;:
             <strong> le Faire, la co-construction, l'intelligence collective, le lien social, la citoyenneté
@@ -38,7 +38,7 @@ export function Association() {
                 La Manufacture des Pays prolonge les savoir-faire développés pendant quatorze ans au sein de la
                 <strong> Manufacture des Paysages</strong>. De cette aventure, elle conserve une conviction&nbsp;:
                 ni une accumulation de connaissances ni une pensée strictement linéaire ne suffisent à préparer
-                les générations qui viennent. L'intelligence n'est pas unidimensionnelle — multiples sont les
+                les générations qui viennent. L'intelligence n'est pas unidimensionnelle, multiples sont les
                 intelligences d'expression et de création, où s'entrecroisent les logiques scientifiques,
                 verbales, musicales, artistiques, sensibles et manuelles.
               </p>
@@ -52,7 +52,7 @@ export function Association() {
                   « Proposer aux jeunes des activités leur permettant de s'engager, et de trouver là une place
                   dans un groupe et un sens à leur existence… »
                 </blockquote>
-                <figcaption style={{ marginTop: "8px", fontSize: "13px", color: "var(--gray)" }}>— Philippe Meirieu</figcaption>
+                <figcaption style={{ marginTop: "8px", fontSize: "13px", color: "var(--gray)" }}>Philippe Meirieu</figcaption>
               </figure>
             </div>
             <aside className="card" style={{ padding: "28px" }}>
@@ -115,8 +115,8 @@ export function Association() {
             <span className="eyebrow">Notre plateforme</span>
             <h2 style={{ maxWidth: "20ch" }}>Pourquoi La Manufacture des Pays a créé Casaminga</h2>
             <p className="lead" style={{ marginTop: "16px", maxWidth: "70ch" }}>
-              Toute la vie d'un réseau de lieux — ateliers, rencontres, chantiers participatifs, campagnes
-              d'adhésion — reste trop souvent invisible, enfermée dans des outils de gestion. Pour y remédier,
+              Toute la vie d'un réseau de lieux, ateliers, rencontres, chantiers participatifs, campagnes
+              d'adhésion, reste trop souvent invisible, enfermée dans des outils de gestion. Pour y remédier,
               l'association a créé <strong>Casaminga</strong>&nbsp;: le site qui rend cette vie
               <strong> publique, lisible et actionnable</strong>. On y découvre l'agenda, on y adhère, on y
               soutient les initiatives qui font vivre les territoires.

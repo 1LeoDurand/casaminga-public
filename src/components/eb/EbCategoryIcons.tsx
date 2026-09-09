@@ -9,7 +9,7 @@ type LucideIcon = React.ComponentType<{ size?: number; strokeWidth?: number; sty
 /**
  * Une icône filaire par catégorie. Jeu lucide-react (déjà installé, licence
  * MIT) : même famille de trait que le modèle. Pour passer aux UIcons de
- * Flaticon, il suffit de remplacer ce dictionnaire — rien d'autre ne bouge.
+ * Flaticon, il suffit de remplacer ce dictionnaire, rien d'autre ne bouge.
  */
 const CATEGORY_ICONS: Record<string, LucideIcon> = {
   atelier: Hammer,
@@ -54,7 +54,7 @@ export function EbCategoryIcons({ activeCategory, onCategoryChange, counts }: Eb
         {/*
           Grille auto-ajustée plutôt qu'un nombre de colonnes figé : le nombre
           de catégories varie avec les données, donc la rangée doit s'adapter
-          seule — 3 par ligne sur un téléphone, tout sur une ligne au large.
+          seule, 3 par ligne sur un téléphone, tout sur une ligne au large.
         */}
         <ul
           className="grid gap-x-2.5 gap-y-6 sm:gap-x-4"

@@ -75,7 +75,7 @@ export function LieuSoutenir() {
           <p className="lead mt-3" style={{ maxWidth: "none" }}>
             Votre don finance directement les activités du lieu. Si l'association est d'intérêt
             général, il ouvre droit à une <strong>réduction d'impôt de 66&nbsp;%</strong> (article 200
-            du CGI) — un don de 50&nbsp;€ ne vous coûte que 17&nbsp;€, et un reçu fiscal vous est délivré.
+            du CGI), un don de 50&nbsp;€ ne vous coûte que 17&nbsp;€, et un reçu fiscal vous est délivré.
           </p>
           <a
             href={`${ADMIN_BASE}/site/${slug}/soutenir`}

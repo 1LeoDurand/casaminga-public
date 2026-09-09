@@ -111,7 +111,7 @@ export async function fetchCampaignTiers(campaignId: string) {
 /**
  * Nombre réel d'adhérents actifs (toutes orgs confondues).
  * Renvoie `null` si la donnée n'est pas lisible publiquement (RLS) ou en cas
- * d'erreur — l'appelant masque alors la statistique plutôt que d'afficher un faux chiffre.
+ * d'erreur, l'appelant masque alors la statistique plutôt que d'afficher un faux chiffre.
  */
 export async function fetchActiveMemberCount(): Promise<number | null> {
   const { count, error } = await supabase
@@ -181,7 +181,7 @@ export async function fetchEventById(id: string): Promise<EventDetailData | null
 }
 
 // ══════════════════════════════════════════════════════════════
-//  Fiche d'un lieu — casaminga.com/<slug>  (belle URL, vitrine)
+//  Fiche d'un lieu, casaminga.com/<slug>  (belle URL, vitrine)
 //  Lecture seule : tout le transactionnel renvoie vers admin.casaminga.com.
 // ══════════════════════════════════════════════════════════════
 

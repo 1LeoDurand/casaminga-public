@@ -4,7 +4,7 @@ import { SiteFooter } from "../components/SiteFooter";
 
 /**
  * Page 404 (fallback router "*").
- * Sober, fully wired: no placeholder, no dead anchor — only real router links.
+ * Sober, fully wired: no placeholder, no dead anchor, only real router links.
  * Replaces the old landing page (App.tsx) as the catch-all so that unknown URLs
  * never surface unwired sections to the Google Ad Grant review.
  */
@@ -23,7 +23,7 @@ export function NotFound() {
           <p className="lead" style={{ marginTop: "18px" }}>
             L'adresse demandée est introuvable&nbsp;: elle a peut-être changé, ou le lien que vous avez suivi
             comporte une erreur. Reprenez votre visite depuis l'accueil, l'agenda du réseau ou la page de
-            contact&nbsp;— nous répondons à chaque message.
+            contact, nous répondons à chaque message.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link to="/" className="btn btn-primary">Retour à l'accueil</Link>

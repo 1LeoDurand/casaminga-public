@@ -1,5 +1,5 @@
 /**
- * Niveau 2 de la stratégie images — livraison responsive.
+ * Niveau 2 de la stratégie images, livraison responsive.
  *
  * Le niveau 1 (compression à l'upload : resize ~2000px + WebP) est fait côté
  * admin (casa-minga-lieux). Ici, côté affichage, on sert l'image à la bonne
@@ -13,7 +13,7 @@
  *   - loading="lazy" + decoding="async" (cf. <LazyImg>),
  *   - les conteneurs à ratio fixe (pas de reflow).
  *
- * Le jour du passage en Pro : passer SUPABASE_IMAGE_TRANSFORM à true — toutes
+ * Le jour du passage en Pro : passer SUPABASE_IMAGE_TRANSFORM à true, toutes
  * les images Supabase seront alors servies redimensionnées + WebP q75, sans
  * autre changement de code.
  */

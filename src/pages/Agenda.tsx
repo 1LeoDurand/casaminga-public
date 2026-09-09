@@ -3,12 +3,13 @@ import { Link } from "react-router-dom";
 import { SiteHeader, HELLOASSO_ADHESION } from "../components/SiteHeader";
 import { SiteFooter } from "../components/SiteFooter";
 import { fetchDiscoveryEvents, fetchPublicOrgs, type PublicEvent, type PublicOrg } from "../lib/supabase";
-import { fmtDate, fmtTime, fmtPrice, isToday, isThisWeekend, TYPE_GLYPHS, TYPE_LABELS } from "../lib/event-meta";
+import { EventCard } from "../components/EventGrid";
+import { isToday, isThisWeekend, TYPE_LABELS } from "../lib/event-meta";
 
 /**
  * Page « Agenda » (item A5 des DIRECTIVES-AD-GRANT.md).
  * Découverte des événements du réseau, ancrée dans la mission de l'association.
- * Filtrage 100 % client (onglets temporels + catégorie) — aucune dépendance.
+ * Filtrage 100 % client (onglets temporels + catégorie), aucune dépendance.
  * État vide rédigé (jamais une page blanche, exigence revue Ad Grant).
  */
 
@@ -34,7 +35,11 @@ export function Agenda() {
       .finally(() => setLoading(false));
   }, []);
 
-  const orgName = (id: string) => orgs.find((o) => o.id === id)?.name ?? null;
+  const orgMap = useMemo(() => {
+    const m = new Map<string, PublicOrg>();
+    for (const o of orgs) m.set(o.id, o);
+    return m;
+  }, [orgs]);
 
   // Catégories réellement présentes dans les données (pas de filtre vide).
   const cats = useMemo(
@@ -65,8 +70,8 @@ export function Agenda() {
           <p className="lead" style={{ marginTop: "18px" }}>
             Cet agenda rassemble les rendez-vous des lieux animés par La Manufacture des Pays et son réseau&nbsp;:
             ateliers de la main, chantiers participatifs, rencontres autour du paysage et du patrimoine,
-            expositions et temps de transmission. Chaque événement prolonge la mission de l'association — le Faire,
-            le lien social et la co-construction — et la plateforme <strong>Casaminga</strong> les rend visibles et
+            expositions et temps de transmission. Chaque événement prolonge la mission de l'association, le Faire,
+            le lien social et la co-construction, et la plateforme <strong>Casaminga</strong> les rend visibles et
             accessibles à toutes et tous.
           </p>
           <p className="lead" style={{ marginTop: "12px" }}>
@@ -109,7 +114,7 @@ export function Agenda() {
                   className={`btn btn-sm ${cat === c ? "btn-primary" : "btn-secondary"}`}
                   aria-pressed={cat === c}
                 >
-                  {TYPE_GLYPHS[c] ?? TYPE_GLYPHS.autre} {TYPE_LABELS[c] ?? c}
+                  {TYPE_LABELS[c] ?? c}
                 </button>
               ))}
           </div>
@@ -143,30 +148,12 @@ export function Agenda() {
             </div>
           ) : (
             <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-              {filtered.map((e) => {
-                const lieu = orgName(e.organization_id);
-                const price = fmtPrice(e.price);
-                return (
-                  <Link key={e.id} to={`/evenement/${e.id}`} className="card" style={{ padding: "22px", display: "block" }}>
-                    <div className="flex items-center justify-between" style={{ marginBottom: "10px" }}>
-                      <span style={{ fontSize: "26px" }}>{TYPE_GLYPHS[e.type] ?? TYPE_GLYPHS.autre}</span>
-                      <span style={{ fontSize: "11px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", color: "var(--gray)" }}>
-                        {TYPE_LABELS[e.type] ?? "Événement"}
-                      </span>
-                    </div>
-                    <div style={{ fontSize: "12px", fontWeight: 600, color: "var(--coral-deep)", marginBottom: "4px" }}>
-                      {fmtDate(e.start_at)} · {fmtTime(e.start_at)}
-                    </div>
-                    <div style={{ fontWeight: 600, lineHeight: 1.3, color: "var(--black)" }}>{e.title}</div>
-                    {lieu && <div style={{ fontSize: "13px", color: "var(--gray)", marginTop: "6px" }}>{lieu}</div>}
-                    {price && (
-                      <div style={{ fontSize: "13px", fontWeight: 600, color: price === "Gratuit" ? "#2f8a4c" : "var(--black)", marginTop: "8px" }}>
-                        {price}
-                      </div>
-                    )}
-                  </Link>
-                );
-              })}
+              {/* Même carte que l'accueil (EventCard en est propriétaire) :
+                  couverture photo, puis titre, extrait, date et lieu. La page
+                  en redéfinissait une, sans image. */}
+              {filtered.map((e) => (
+                <EventCard key={e.id} event={e} org={orgMap.get(e.organization_id)} />
+              ))}
             </div>
           )}
         </section>

@@ -13,7 +13,7 @@ export function SiteFooter() {
       <div className="wrap" style={{ padding: "48px 28px" }}>
         <p style={{ fontWeight: 700, color: "var(--black)" }}>La Manufacture des Pays</p>
         <p style={{ fontSize: "13px", color: "var(--gray)", marginTop: "6px", maxWidth: "64ch", lineHeight: 1.7 }}>
-          Site édité par l'association <strong>La Manufacture des Pays</strong> — association loi 1901,
+          Site édité par l'association <strong>La Manufacture des Pays</strong>, association loi 1901,
           RNA W342002465, SIREN 824&nbsp;820&nbsp;856. Siège : atelier Bernard Kohn,
           La Distillerie, 10 rue de la sous-préfecture, 34700 Lodève. <strong>Casaminga</strong> est la
           plateforme numérique de l'association.
@@ -40,7 +40,7 @@ export function SiteFooter() {
           </a>
         </nav>
         <p className="mt-6 text-xs" style={{ color: "var(--gray)" }}>
-          © {year} La Manufacture des Pays — Casaminga
+          © {year} La Manufacture des Pays · Casaminga
         </p>
       </div>
     </footer>

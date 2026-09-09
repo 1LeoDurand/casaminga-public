@@ -83,7 +83,7 @@ export function LieuHome() {
         </section>
       ) : null}
 
-      {/* Agenda — aperçu */}
+      {/* Agenda, aperçu */}
       {showAgenda ? (
         <section className="wrap py-10">
           <div className="flex items-baseline justify-between gap-4">

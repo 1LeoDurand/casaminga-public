@@ -4,10 +4,10 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import './index.css'
 import { RouteTracker } from './lib/analytics.tsx'
 // NOTE : App.tsx (ancienne landing « découverte ») reste dans le repo mais n'est
-// plus rendue — elle contenait des contrôles non câblés (recherche désactivée,
+// plus rendue, elle contenait des contrôles non câblés (recherche désactivée,
 // onglet « Pour toi », destinations inertes) incompatibles avec la revue Ad Grant.
 // NOTE : Accueil.tsx (accueil institutionnel « Penser collectivement le
-// patrimoine de demain ») reste dans le repo mais n'est plus routé — la racine
+// patrimoine de demain ») reste dans le repo mais n'est plus routé, la racine
 // sert désormais le portail de découverte. Bascule réversible : réimporter
 // Accueil et remettre <Route path="/" element={<Accueil />} /> suffit.
 // NOTE : DesignAccueil.tsx (maquette découverte « Eventbrite ») reste également

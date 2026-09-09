@@ -15,7 +15,7 @@ function CampaignCard({ campaign, org }: { campaign: PublicCampaign; org?: Publi
     <article className="card flex flex-col overflow-hidden" style={{ borderTop: `5px solid ${color}` }}>
       <div className="flex flex-1 flex-col p-6">
         {org && <span className="text-xs" style={{ color: "var(--gray)" }}>{org.name}</span>}
-        <h3 className="mt-0.5 text-[20px] font-bold leading-snug" style={{ color: "var(--black)" }}>{campaign.title}</h3>
+        <h3 className="mt-0.5 text-[18px] font-bold leading-snug" style={{ color: "var(--black)" }}>{campaign.title}</h3>
         {campaign.description && (
           <p className="mt-2 line-clamp-2 text-sm leading-relaxed" style={{ color: "var(--gray)" }}>{campaign.description}</p>
         )}
@@ -23,7 +23,7 @@ function CampaignCard({ campaign, org }: { campaign: PublicCampaign; org?: Publi
           <div className="mt-4 flex flex-wrap gap-2">
             {campaign.tiers.slice(0, 3).map((t) => (
               <span key={t.id} className="rounded-full px-3 py-1 text-xs" style={{ background: "var(--gray-light)", color: "var(--black)" }}>
-                {t.name} — {fmtAmount(t.amount)}
+                {t.name} · {fmtAmount(t.amount)}
               </span>
             ))}
           </div>

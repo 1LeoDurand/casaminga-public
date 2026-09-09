@@ -40,7 +40,7 @@ export function Footer() {
         </div>
 
         <div className="mt-11 flex flex-wrap items-center justify-between gap-3.5 border-t pt-5" style={{ borderColor: "rgba(255,255,255,0.1)", fontSize: "11.5px", color: "rgba(255,255,255,0.5)" }}>
-          <span>© {new Date().getFullYear()} Casa Minga — Des lieux où l'on fait ensemble</span>
+          <span>© {new Date().getFullYear()} Casa Minga : des lieux où l'on fait ensemble</span>
           <span>Pensé depuis le terrain · Sobriété numérique</span>
         </div>
       </div>
