@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import {
-  CalendarDays, Clock, MapPin, Share2, Ticket, Users, ArrowRight,
+  CalendarDays, Clock, MapPin, Share2, Ticket, ArrowRight,
 } from "lucide-react";
 // Chrome institutionnel (liens routeur uniquement), l'ancien Nav/Footer de la
 // landing pointait vers des ancres (#lieux, #adhesions…) inexistantes ici.
@@ -12,6 +12,7 @@ import { EbMap } from "../components/eb/EbMap";
 import { EventCover } from "../components/EventCover";
 import { resolveEventImage } from "../lib/event-images";
 import { TYPE_LABELS } from "../lib/event-meta";
+import { isImportedOrg, splitImportedNotice } from "../lib/imported";
 import {
   fetchEventById, fetchDiscoveryEvents, fetchPublicEstablishments, fetchPublicOrgs,
   type EventDetailData, type PublicEvent, type PublicOrg, type PublicEstablishment,
@@ -24,13 +25,12 @@ import {
  * 2026-09-08), section par section :
  *   1  visuel        4  quand / où           8  lieu + carte
  *   2  titre         5  panneau « Participer » (collant)   10 organisateur
- *   3  lieu éditeur  6  aperçu                11 autres rendez-vous du lieu
- *   7  bon à savoir                           12 dans le réseau · 13 agenda
+ *   3  lieu éditeur  6  aperçu                10 bis provenance / revendication
+ *   7  bon à savoir  11 autres rendez-vous du lieu
+ *                    12 dans le réseau · 13 agenda
  *
  * **Sections volontairement absentes**, faute de données en base, une section
- * vide serait un décor : la FAQ, le signalement, et le couple provenance /
- * revendication d'une fiche importée (colonnes `source` et `claim_status`
- * inexistantes à ce jour).
+ * vide serait un décor : la FAQ et le signalement.
  *
  * Typographie : **Poppins** partout, comme sur tout le site, c'est la seule
  * police du projet, aucune police d'affichage ne vient s'y ajouter.
@@ -173,6 +173,27 @@ export function EventDetail() {
   // Formulaire de contact du lieu (même pattern que les vitrines /:slug) : c'est
   // le canal réel pour demander à participer / réserver une place.
   const contactUrl = vitrineUrl ? `${vitrineUrl}#contact` : null;
+
+  /**
+   * Fiche moissonnée : l'organisateur n'a pas de compte, la provenance est
+   * consignée en fin de description. On la sort du texte pour l'afficher à sa
+   * place, et on ouvre au lieu la possibilité de récupérer sa page.
+   */
+  const imported = isImportedOrg(org);
+  const { body: descriptionBody, sourceUrl } = splitImportedNotice(event.description);
+
+  /**
+   * Revendication : un simple `mailto`, comme la page Contact du site. Le lieu
+   * écrit lui-même, donc Casaminga ne stocke rien, n'envoie rien, et ne promet
+   * pas une transmission qu'il ne maîtrise pas. Le sujet porte le nom du lieu
+   * pour que la demande soit traitable sans aller-retour.
+   */
+  const claimHref =
+    "mailto:manufacturedespays@gmail.com" +
+    `?subject=${encodeURIComponent(`Revendication de la page : ${orgName}`)}` +
+    `&body=${encodeURIComponent(
+      `Bonjour,\n\nJe fais partie de l'équipe de ${orgName} et je souhaite récupérer la page de ce lieu sur Casaminga.\n\nÉvénement concerné : ${event.title}\nPage : ${typeof window === "undefined" ? "" : window.location.href}\n\nMon nom :\nMa fonction :\nTéléphone :\n\nMerci,`
+    )}`;
 
   /** Section 8 : uniquement les établissements géolocalisés de CE lieu. */
   const orgEstablishments = org
@@ -318,11 +339,11 @@ export function EventDetail() {
             </div>
 
             {/* 6 · Aperçu */}
-            {event.description && (
+            {descriptionBody && (
               <section>
                 <SectionTitle>Aperçu</SectionTitle>
                 <p className="lead mt-3" style={{ whiteSpace: "pre-line", maxWidth: "none" }}>
-                  {event.description}
+                  {descriptionBody}
                 </p>
               </section>
             )}
@@ -332,17 +353,17 @@ export function EventDetail() {
               <SectionTitle>Bon à savoir</SectionTitle>
               <div className="mt-3 flex flex-wrap gap-3">
                 {duration && (
-                  <span className="card inline-flex items-center gap-2 px-4 py-2.5 text-sm font-semibold">⏱️ {duration}</span>
+                  <span className="card inline-flex items-center gap-2 px-4 py-2.5 text-sm font-semibold">{duration}</span>
                 )}
-                <span className="card inline-flex items-center gap-2 px-4 py-2.5 text-sm font-semibold">🧍 En présentiel</span>
+                <span className="card inline-flex items-center gap-2 px-4 py-2.5 text-sm font-semibold">En présentiel</span>
                 {price && (
                   <span className="card inline-flex items-center gap-2 px-4 py-2.5 text-sm font-semibold">
-                    {price === "Gratuit" ? "🎟️ Entrée gratuite" : `💶 ${price}`}
+                    {price === "Gratuit" ? "Entrée gratuite" : price}
                   </span>
                 )}
                 {event.capacity != null && event.capacity > 0 && (
                   <span className="card inline-flex items-center gap-2 px-4 py-2.5 text-sm font-semibold">
-                    <Users size={15} aria-hidden="true" /> {event.capacity} places
+                    {event.capacity} places
                   </span>
                 )}
               </div>
@@ -407,6 +428,49 @@ export function EventDetail() {
                       </a>
                     )}
                   </div>
+                </div>
+              </section>
+            )}
+
+            {/*
+              10 bis · Provenance et revendication.
+              N'apparaît que sur les fiches moissonnées. Deux choses distinctes :
+              le visiteur apprend d'où vient l'information et peut aller la
+              vérifier à la source ; le lieu, s'il tombe sur sa propre page,
+              trouve le moyen de la récupérer. Volontairement sobre : c'est une
+              note de bas de page, pas un appel à l'action de plus.
+            */}
+            {imported && (
+              <section>
+                <div
+                  className="rounded-[var(--radius-sm)] p-5 text-sm"
+                  style={{ background: "var(--gray-light)", color: "var(--gray)" }}
+                >
+                  <p>
+                    Cette fiche a été reprise d'un agenda public ouvert. Elle n'est pas
+                    encore tenue par {orgName}, et les modalités d'inscription se règlent
+                    directement avec le lieu.
+                  </p>
+                  <div className="mt-3 flex flex-wrap gap-x-5 gap-y-2">
+                    {sourceUrl && (
+                      <a href={sourceUrl} target="_blank" rel="noopener noreferrer" className="font-semibold">
+                        Voir l'annonce d'origine
+                      </a>
+                    )}
+                    {org?.website && (
+                      <a href={org.website} target="_blank" rel="noopener noreferrer" className="font-semibold">
+                        Site du lieu
+                      </a>
+                    )}
+                  </div>
+                  <p className="mt-4 pt-4" style={{ borderTop: "1px solid var(--gray-mid)" }}>
+                    <strong style={{ color: "var(--black)" }}>Vous organisez cet événement ?</strong>{" "}
+                    Cette page est la vôtre, récupérez-la pour la corriger, la compléter et
+                    recevoir les demandes des visiteurs.
+                  </p>
+                  <a href={claimHref} className="btn btn-secondary btn-sm mt-3">
+                    Récupérer cette page
+                  </a>
                 </div>
               </section>
             )}
